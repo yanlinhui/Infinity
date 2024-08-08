@@ -3,6 +3,7 @@ package com.baidu.infinity.ui.fragment.welcome
 import android.animation.Animator
 import android.graphics.Color
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.baidu.infinity.R
 import com.baidu.infinity.databinding.FragmentWelcomeLayoutBinding
@@ -41,12 +42,12 @@ class WelcomeFragment: BaseFragment<FragmentWelcomeLayoutBinding>() {
 
         //测试
         viewModel.users.observe(viewLifecycleOwner){
-            toast("用户数量：${it.size}")
+            //toast("用户数量：${it.size}")
         }
     }
 
     private fun insertUser(){
-        //viewModel.login("rose","123",PasswordType.PIN)
+        //viewModel.login("jack","123",PasswordType.PIN)
         //viewModel.register("rose","123","123")
     }
 
@@ -61,7 +62,13 @@ class WelcomeFragment: BaseFragment<FragmentWelcomeLayoutBinding>() {
                 //过期 需要登录
                 //看默认的登陆类型
                 if (user.passwordType == 0){
-                    findNavController().navigate(R.id.action_welcomeFragment_to_pinLoginFragment)
+                    val extras = FragmentNavigatorExtras(mBinding.animationView to "explode")
+                    findNavController().navigate(
+                        R.id.action_welcomeFragment_to_pinLoginFragment,
+                        null,
+                        null,
+                        extras
+                    )
                 }else{
                     findNavController().navigate(R.id.action_welcomeFragment_to_picLoginFragment)
                 }

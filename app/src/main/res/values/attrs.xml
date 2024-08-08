@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  只能在xml中使用-->
+    <declare-styleable name="PXDInputView">
+        <attr name="info_text" format="string|reference"/>
+        <attr name="hint_text" format="string|reference"/>
+        <attr name="input_type" format="enum">
+            <enum name="text" value="0"/>
+            <enum name="password" value="1"/>
+        </attr>
+    </declare-styleable>
+</resources>

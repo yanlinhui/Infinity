@@ -14,16 +14,13 @@
             android:id="@+id/action_welcomeFragment_to_picLoginFragment"
             app:destination="@id/picLoginFragment"
             app:popUpTo="@id/welcomeFragment"
-            app:popUpToInclusive="true"
-            app:enterAnim="@anim/right_in_anim"
-            app:exitAnim="@anim/left_out_anim"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_welcomeFragment_to_pinLoginFragment"
             app:destination="@id/pinLoginFragment"
+            app:exitAnim="@anim/left_out_anim"
             app:popUpTo="@id/welcomeFragment"
-            app:popUpToInclusive="true"
-            app:enterAnim="@anim/right_in_anim"
-            app:exitAnim="@anim/left_out_anim"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_welcomeFragment_to_homeFragment"
             app:destination="@id/homeFragment"
@@ -51,6 +48,8 @@
         <action
             android:id="@+id/action_pinLoginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
+            app:enterAnim="@anim/right_in_anim"
+            app:exitAnim="@anim/left_out_anim"
             app:popUpTo="@id/pinLoginFragment"
             app:popUpToInclusive="true" />
     </fragment>

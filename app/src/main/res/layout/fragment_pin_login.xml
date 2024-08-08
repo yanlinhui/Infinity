@@ -6,16 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.password.PinLoginFragment">
 
-    <TextView
-        android:id="@+id/textView"
+    <View
+        android:id="@+id/view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="pin登录"
-        android:textSize="40sp"
+        android:background="#1E2438"
+        android:transitionName="explode"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.baidu.infinity.ui.view.PXDUnlockView
+        android:id="@+id/unlockView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

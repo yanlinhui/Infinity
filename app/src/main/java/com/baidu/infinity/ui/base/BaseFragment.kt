@@ -34,6 +34,4 @@ abstract class BaseFragment<T: ViewBinding>: Fragment() {
 
     abstract fun initBinding(): T
     open fun initView() {}
-
-
 }

@@ -6,11 +6,20 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.OnApplyWindowInsetsListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.baidu.infinity.R
 import com.baidu.infinity.databinding.FragmentPicLoginBinding
 import com.baidu.infinity.ui.base.BaseFragment
 import com.baidu.infinity.ui.util.KeyboardAnimation
+import com.baidu.infinity.ui.util.LoginRegisterResult
+import com.baidu.infinity.ui.util.PasswordType
+import com.baidu.infinity.ui.util.WrongType
+import com.baidu.infinity.viewmodel.UserViewModel
 
 class PicLoginFragment: BaseFragment<FragmentPicLoginBinding>() {
+    private val viewModel:UserViewModel by activityViewModels()
+
     override fun initBinding(): FragmentPicLoginBinding {
         return FragmentPicLoginBinding.inflate(layoutInflater)
     }
@@ -19,8 +28,48 @@ class PicLoginFragment: BaseFragment<FragmentPicLoginBinding>() {
     override fun initView() {
         initkeyboardEvent()
         initKeyboardListener()
+        initEvents()
     }
-
+    private fun initEvents(){
+        mBinding.usernameView.addTextChangeListener {
+            mBinding.loginButton.isEnabled = mBinding.usernameView.text().isNotEmpty()
+                    && mBinding.passweordView.text().isNotEmpty()
+        }
+        mBinding.passweordView.addTextChangeListener {
+            mBinding.loginButton.isEnabled = mBinding.usernameView.text().isNotEmpty()
+                    && mBinding.passweordView.text().isNotEmpty()
+        }
+        mBinding.loginButton.setOnClickListener {
+            viewModel.login(mBinding.usernameView.text(), mBinding.passweordView.text(),PasswordType.PIC)
+        }
+        //监听登录结果
+        viewModel.loginRegisterResult.observe(viewLifecycleOwner){
+            when(it){
+                is LoginRegisterResult.Success -> {
+                    //成功登录 进入下一个界面
+                    mBinding.alertView.showMessage("登录成功")
+                    findNavController().navigate(R.id.action_picLoginFragment_to_homeFragment)
+                }
+                is LoginRegisterResult.Failure -> {
+                    //登录失败
+                    when(it.type){
+                        WrongType.USER_NOT_FOUND -> {
+                            mBinding.usernameView.showError()
+                            mBinding.alertView.showErrorMessage("用户不存在")
+                        }
+                        WrongType.WRONG_PASSWORD -> {
+                            mBinding.passweordView.showError()
+                            mBinding.alertView.showErrorMessage("密码错误")
+                        }
+                        else -> {}
+                    }
+                }
+                else ->{
+                    findNavController().navigate(R.id.action_picLoginFragment_to_homeFragment)
+                }
+            }
+        }
+    }
     @RequiresApi(Build.VERSION_CODES.R)
     private fun initkeyboardEvent(){
         mBinding.root.setOnClickListener {

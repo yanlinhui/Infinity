@@ -1,4 +1,4 @@
-package com.baidu.infinity.ui.util
+package com.baidu.infinity.ui.view
 
 import android.content.Context
 import android.graphics.Color

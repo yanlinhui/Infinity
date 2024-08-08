@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/welcomeFragment">
-
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="com.baidu.infinity.ui.fragment.welcome.WelcomeFragment"
@@ -18,17 +17,28 @@
         <action
             android:id="@+id/action_welcomeFragment_to_pinLoginFragment"
             app:destination="@id/pinLoginFragment"
-            app:exitAnim="@anim/left_out_anim"
             app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_welcomeFragment_to_homeFragment"
             app:destination="@id/homeFragment"
-            app:enterAnim="@anim/right_in_anim"
-            app:exitAnim="@anim/right_out_anim"
             app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.baidu.infinity.ui.fragment.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_accountCenterFragment"
+            app:destination="@id/accountCenterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountCenterFragment"
+        android:name="com.baidu.infinity.ui.fragment.account.AccountCenterFragment"
+        android:label="fragment_account_center"
+        tools:layout="@layout/fragment_account_center" />
     <fragment
         android:id="@+id/picLoginFragment"
         android:name="com.baidu.infinity.ui.fragment.password.PicLoginFragment"
@@ -48,29 +58,7 @@
         <action
             android:id="@+id/action_pinLoginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
-            app:enterAnim="@anim/right_in_anim"
-            app:exitAnim="@anim/left_out_anim"
             app:popUpTo="@id/pinLoginFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.baidu.infinity.ui.fragment.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_accountCenterFragment"
-            app:destination="@id/accountCenterFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/accountCenterFragment"
-        android:name="com.baidu.infinity.ui.fragment.account.AccountCenterFragment"
-        android:label="fragment_account_center"
-        tools:layout="@layout/fragment_account_center" >
-        <action
-            android:id="@+id/action_accountCenterFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/accountCenterFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

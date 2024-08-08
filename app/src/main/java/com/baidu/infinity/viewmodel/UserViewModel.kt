@@ -30,6 +30,9 @@ class UserViewModel(
     private var _currentUser:User? = null
     val currentUser get() = _currentUser
 
+    //记录查找登录用户的信息是否完成
+    private var _isFindFinihsed:MutableLiveData<Boolean> = MutableLiveData(false)
+    val isFindFinihsed: LiveData<Boolean> = _isFindFinihsed
 
     //启动就查看是否有登录的用户
     init {
@@ -38,8 +41,11 @@ class UserViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             repository.findLoginedUser().also {
                 if (it.isNotEmpty()){
-                    _currentUser = it[0]
+                    withContext(Dispatchers.Main){
+                        _currentUser = it[0]
+                    }
                 }
+                _isFindFinihsed.postValue(true)
             }
         }
     }

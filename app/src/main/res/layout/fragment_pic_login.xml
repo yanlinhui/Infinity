@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5">
 
-        <com.baidu.infinity.ui.util.PXDInputView
+        <com.baidu.infinity.ui.view.PXDInputView
             android:id="@+id/usernameView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             app:input_type="text"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.baidu.infinity.ui.util.PXDInputView
+        <com.baidu.infinity.ui.view.PXDInputView
             android:id="@+id/passweordView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,4 +59,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/passweordView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.baidu.infinity.ui.view.PXDAlertView
+        android:id="@+id/alertView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

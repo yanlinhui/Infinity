@@ -84,6 +84,13 @@ class UserViewModel(
         }
     }
 
+    //修改密码类型
+    fun changePasswordType(type: PasswordType){
+        if (_currentUser == null) return
+        _currentUser!!.passwordType = if (type == PasswordType.PIN) 0 else 1
+
+        updateUser(_currentUser!!)
+    }
     /**
      * 修改登录状态
      */

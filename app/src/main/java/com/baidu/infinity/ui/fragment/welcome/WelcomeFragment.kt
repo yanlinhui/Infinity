@@ -37,21 +37,25 @@ class WelcomeFragment: BaseFragment<FragmentWelcomeLayoutBinding>() {
             }
         })
 
-        //为了测试 插入一个用户
-        insertUser()
+
 
         //测试
         viewModel.users.observe(viewLifecycleOwner){
             //toast("用户数量：${it.size}")
+
         }
     }
 
     private fun insertUser(){
         //viewModel.login("jack","123",PasswordType.PIN)
         //viewModel.register("rose","123","123")
+        viewModel.changePasswordType(PasswordType.PIC)
     }
 
     private fun navigate(){
+        //为了测试 插入一个用户
+        insertUser()
+
         //获取登录用户
         val user = viewModel.currentUser
         //有登录用户

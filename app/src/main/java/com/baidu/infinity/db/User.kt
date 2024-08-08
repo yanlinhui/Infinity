@@ -21,5 +21,5 @@ data class User(
     var isLogin:Boolean = false,
     var loginDate:Date = Date(), //登录时间
     val validate:Long = 10000*1000, //有效时间
-    val passwordType:Int = 0 //登录类型 0:PIN  1:PIC
+    var passwordType:Int = 0 //登录类型 0:PIN  1:PIC
 ):Parcelable

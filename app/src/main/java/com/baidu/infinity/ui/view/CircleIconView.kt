@@ -12,7 +12,7 @@ import io.github.florent37.shapeofview.shapes.CircleView
 
 class CircleIconView(
     context: Context,
-    attrs: AttributeSet?
+    attrs: AttributeSet? = null
 ): CircleView(context, attrs) {
     private var mIconTextView: IconTextView
     init {

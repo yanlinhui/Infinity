@@ -5,6 +5,9 @@ import com.baidu.infinity.databinding.FragmentHomeBinding
 import com.baidu.infinity.model.IconModel
 import com.baidu.infinity.ui.base.BaseFragment
 import com.baidu.infinity.ui.util.OperationType
+import com.baidu.infinity.ui.util.getDrawToolIconModels
+import com.baidu.infinity.ui.util.getHomeMenuIconModels
+import com.baidu.infinity.ui.util.getOperationToolIconModels
 
 class HomeFragment: BaseFragment<FragmentHomeBinding>() {
     override fun initBinding(): FragmentHomeBinding {
@@ -12,11 +15,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun initView() {
-        val model = IconModel(
-            OperationType.DRAW_MOVE,
-            R.string.menu
-        )
-        mBinding.circleIconView.setIconModel(model)
-        //mBinding.circleIconView.setIconSize(30)
+        //配置数据源
+        //mBinding.iconMenuView.setIcons(getOperationToolIconModels())
     }
 }

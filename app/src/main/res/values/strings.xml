@@ -1,3 +1,45 @@
 <resources>
     <string name="app_name">Infinity</string>
+
+    <string name="menu">&#xe6c1;</string>
+
+    <string-array name="draw_shapes">
+        <item>&#xe6fd;</item>
+        <item>&#xe60c;</item>
+        <item>&#xeb9e;</item>
+        <item>&#xe642;</item>
+        <item>&#xe643;</item>
+        <item>&#xe72c;</item>
+        <item>&#xe684;</item>
+        <item>&#xe65b;</item>
+        <item>&#xe6fa;</item>
+        <item>&#xe603;</item>
+        <item>&#xe838;</item>
+    </string-array>
+
+    <string-array name="menus">
+        <item>&#xe63b;</item>
+        <item>&#xe600;</item>
+        <item>&#xe7e7;</item>
+        <item>&#xe621;</item>
+        <item>&#xe768;</item>
+        <item>&#xe67c;</item>
+    </string-array>
+
+    <string-array name="draw_tools">
+        <item  >&#xe624;</item>
+        <item  >&#xe6a6;</item>
+        <item  >&#xe6d9;</item>
+        <item  >&#xe615;</item>
+    </string-array>
+
+    <string name="register">&#xe683;</string>
+    <string name="not_login">&#xe610;</string>
+    <string name="works">&#xe604;</string>
+    <string name="change_password_type">&#xe87b;</string>
+    <string name="open_arrow">&#xe675;</string>
+    <string name="close_arrow">&#xe676;</string>
+    <string name="deletex">&#xe651;</string>
+    <string name="go_back">&#xe601;</string>
+
 </resources>

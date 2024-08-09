@@ -43,6 +43,7 @@ class UserViewModel(
                 if (it.isNotEmpty()){
                     withContext(Dispatchers.Main){
                         _currentUser = it[0]
+                        //_isFindFinihsed.value = true
                     }
                 }
                 _isFindFinihsed.postValue(true)

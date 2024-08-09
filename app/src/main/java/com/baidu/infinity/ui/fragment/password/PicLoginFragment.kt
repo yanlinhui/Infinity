@@ -15,6 +15,7 @@ import com.baidu.infinity.ui.util.KeyboardAnimation
 import com.baidu.infinity.ui.util.LoginRegisterResult
 import com.baidu.infinity.ui.util.PasswordType
 import com.baidu.infinity.ui.util.WrongType
+import com.baidu.infinity.ui.util.delayTask
 import com.baidu.infinity.viewmodel.UserViewModel
 
 class PicLoginFragment: BaseFragment<FragmentPicLoginBinding>() {
@@ -61,11 +62,17 @@ class PicLoginFragment: BaseFragment<FragmentPicLoginBinding>() {
                             mBinding.passweordView.showError()
                             mBinding.alertView.showErrorMessage("密码错误")
                         }
+                        WrongType.USER_LOGINED ->{
+                            mBinding.alertView.showMessage("用户已登录 立刻跳转")
+                            delayTask(1500) {
+                                findNavController().navigate(R.id.action_picLoginFragment_to_homeFragment)
+                            }
+                        }
                         else -> {}
                     }
-                }
+                }//welcome -> pic -> home
                 else ->{
-                    findNavController().navigate(R.id.action_picLoginFragment_to_homeFragment)
+                    //findNavController().navigate(R.id.action_picLoginFragment_to_homeFragment)
                 }
             }
         }

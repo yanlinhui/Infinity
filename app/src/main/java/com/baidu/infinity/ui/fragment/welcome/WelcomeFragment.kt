@@ -61,7 +61,7 @@ class WelcomeFragment: BaseFragment<FragmentWelcomeLayoutBinding>() {
 
     private fun navigate(){
         //为了测试 插入一个用户
-        //insertUser()
+        insertUser()
 
         //获取登录用户
         val user = viewModel.currentUser
@@ -87,7 +87,7 @@ class WelcomeFragment: BaseFragment<FragmentWelcomeLayoutBinding>() {
                     findNavController().navigate(R.id.action_welcomeFragment_to_picLoginFragment)
                 }
             }else{
-                //这个是游客 直接进入主页
+                //已登录 没过期 直接进入主页
                 toast("2")
                 findNavController().navigate(R.id.action_welcomeFragment_to_homeFragment)
             }

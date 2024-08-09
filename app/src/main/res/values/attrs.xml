@@ -9,4 +9,8 @@
             <enum name="password" value="1"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="CircleIconView">
+        <attr name="icon_size_sp" format="dimension|reference"/>
+    </declare-styleable>
 </resources>

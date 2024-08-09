@@ -56,12 +56,12 @@ class WelcomeFragment: BaseFragment<FragmentWelcomeLayoutBinding>() {
     private fun insertUser(){
         //viewModel.register("merry","123","123")
         //viewModel.login("merry","123",PasswordType.PIN)
-        viewModel.changePasswordType(PasswordType.PIC)
+        //viewModel.changePasswordType(PasswordType.PIN)
     }
 
     private fun navigate(){
         //为了测试 插入一个用户
-        insertUser()
+        //insertUser()
 
         //获取登录用户
         val user = viewModel.currentUser
@@ -74,7 +74,6 @@ class WelcomeFragment: BaseFragment<FragmentWelcomeLayoutBinding>() {
                 //过期 需要登录
                 //看默认的登陆类型
                 if (user.passwordType == 0){
-                    toast("0")
                     val extras = FragmentNavigatorExtras(mBinding.animationView to "explode")
                     findNavController().navigate(
                         R.id.action_welcomeFragment_to_pinLoginFragment,
@@ -83,16 +82,14 @@ class WelcomeFragment: BaseFragment<FragmentWelcomeLayoutBinding>() {
                         extras
                     )
                 }else{
-                    toast("1")
                     findNavController().navigate(R.id.action_welcomeFragment_to_picLoginFragment)
                 }
             }else{
                 //已登录 没过期 直接进入主页
-                toast("2")
+
                 findNavController().navigate(R.id.action_welcomeFragment_to_homeFragment)
             }
         }else{
-            toast("3")
             //这个是游客 直接进入主页
             findNavController().navigate(R.id.action_welcomeFragment_to_homeFragment)
         }

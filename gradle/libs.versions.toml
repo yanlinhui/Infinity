@@ -16,6 +16,7 @@ room = "2.6.1"
 navigation = "2.6.0"
 navigationArg = "2.7.7"
 lottie = "6.5.0"
+shape = "1.4.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -50,6 +51,9 @@ lifecycle-compiler = { group = "androidx.lifecycle", name = "lifecycle-compiler"
 
 #lottie
 airbnb-lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie"}
+
+#shapeofview
+shapeofview = { group = "io.github.florent37", name = "shapeofview", version.ref = "shape"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

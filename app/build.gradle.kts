@@ -87,4 +87,7 @@ dependencies {
 
     //lottie
     implementation(libs.airbnb.lottie)
+
+    //shapeofview
+    implementation(libs.shapeofview)
 }

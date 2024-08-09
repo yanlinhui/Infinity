@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="主页"
-        android:textSize="40sp"
+    <com.baidu.infinity.ui.view.CircleIconView
+        android:id="@+id/circleIconView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:icon_size_sp="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

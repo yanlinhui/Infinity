@@ -15,9 +15,17 @@ class CircleIconView(
     attrs: AttributeSet? = null
 ): CircleView(context, attrs) {
     private var mIconTextView: IconTextView
+
+    var clickCallback:(IconTextView)->Unit = {}
+        set(value) {
+            field = value
+            mIconTextView.clickCallback = value
+        }
+
     init {
         //在内部添加一个IconTextView
         mIconTextView = IconTextView(context)
+
         //确定布局参数
         val lp = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         lp.gravity = Gravity.CENTER

@@ -21,8 +21,8 @@ class IconMenuView(
     attrs: AttributeSet?
 ): LinearLayout(context,attrs) {
     private var iconList:List<IconModel> = emptyList()
-    private val defaultWidth = dp2px(50)
-    private val defaultHeight = dp2px(50)
+    private val defaultWidth = dp2px(40)
+    private val defaultHeight = dp2px(40)
     private var mWidth = defaultWidth
     private var mHeight = defaultHeight
     private var mCurrentSelectedView:IconTextView? = null
@@ -46,6 +46,11 @@ class IconMenuView(
             //设置布局参数
             val lp = LayoutParams(mWidth, mHeight)
             lp.weight = 1f
+            if (orientation == VERTICAL) {
+                lp.topMargin = dp2px(5)
+            }else{
+                lp.leftMargin = dp2px(5)
+            }
             //添加到布局中
             addView(circleIconView,lp)
         }

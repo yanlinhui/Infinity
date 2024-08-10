@@ -4,6 +4,19 @@ import com.baidu.infinity.R
 import com.baidu.infinity.model.IconModel
 
 /**
+ * 获取绘制菜单menu的model
+ */
+fun getMenuIconModel():IconModel{
+    return IconModel(
+        OperationType.DRAW_MENU,
+        R.string.menu,
+        IconState.SELECTED,
+        R.color.light_red,
+        R.color.light_red
+    )
+}
+
+/**
  * 构建绘制工具菜单的数据模型
  */
 fun getDrawToolIconModels(): List<IconModel> {

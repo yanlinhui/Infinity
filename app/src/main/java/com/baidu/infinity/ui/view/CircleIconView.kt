@@ -34,7 +34,7 @@ class CircleIconView(
 
         //解析自定义的属性
         val ta = context.obtainStyledAttributes(attrs, R.styleable.CircleIconView)
-        val textSize = ta.getDimension(R.styleable.CircleIconView_icon_size_sp,25f)
+        val textSize = ta.getDimension(R.styleable.CircleIconView_icon_size_sp,20f)
         ta.recycle()
         //设置字体大小
         setIconSize(textSize.toInt())

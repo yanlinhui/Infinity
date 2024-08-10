@@ -90,4 +90,7 @@ dependencies {
 
     //shapeofview
     implementation(libs.shapeofview)
+
+    //colorpickerView
+    implementation(libs.colorpickerview)
 }

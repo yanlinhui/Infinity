@@ -2,6 +2,8 @@ package com.baidu.infinity.ui.fragment.home.draw
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
+import android.util.Log
 
 /**
  * 管理图层
@@ -16,6 +18,11 @@ class Layer(val id: Int,val width:Int, val height:Int) {
 
     init {
         mCanvas = Canvas(mBitmap)
+    }
+
+    //获取当前图层的bitmap对象
+    fun getBitmap():Bitmap{
+        return mBitmap
     }
 
     //当手触摸到屏幕 并且 是在绘制形状时 添加图形
@@ -39,6 +46,7 @@ class Layer(val id: Int,val width:Int, val height:Int) {
 
     //提供给外部统一绘制
     fun draw(){
+        mBitmap.eraseColor(Color.TRANSPARENT)
         mShapes.forEach { shape ->
             shape.draw(mCanvas)
         }

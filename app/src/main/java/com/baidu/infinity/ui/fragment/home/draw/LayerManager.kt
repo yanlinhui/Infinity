@@ -1,5 +1,7 @@
 package com.baidu.infinity.ui.fragment.home.draw
 
+import android.graphics.Bitmap
+
 class LayerManager {
     //保存所有的图层
     private val layers: ArrayList<Layer> = arrayListOf()
@@ -59,6 +61,18 @@ class LayerManager {
         if (layers.isEmpty()) return null
         return layers.last()
     }
+    //获取所有图层
+    fun getLayers(): List<Layer>{
+        return layers
+    }
+    //获取所有图层的Bitmap
+    fun getLayersBitmap(): List<Bitmap>{
+        val bitmapList = arrayListOf<Bitmap>()
+        layers.forEach { layer ->
+            bitmapList.add(layer.getBitmap())
+        }
+        return bitmapList
+    }
 
     //创建图形
     //当手触摸到屏幕 并且 是在绘制形状时 添加图形
@@ -71,8 +85,11 @@ class LayerManager {
     }
 
     //提供给外部统一绘制
+    //绘制所有图层
     fun draw(){
-        getCurrentLayer()?.draw()
+        layers.forEach { layer ->
+            layer.draw()
+        }
     }
 
     //撤销 删除最后一个图形

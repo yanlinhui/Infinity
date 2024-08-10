@@ -3,6 +3,7 @@ package com.baidu.infinity.ui.fragment.home
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.graphics.Color
+import android.os.Bundle
 import android.widget.PopupWindow
 import com.baidu.infinity.R
 import com.baidu.infinity.databinding.FragmentHomeBinding
@@ -13,6 +14,7 @@ import com.baidu.infinity.ui.util.getDrawToolIconModels
 import com.baidu.infinity.ui.util.getHomeMenuIconModels
 import com.baidu.infinity.ui.util.getMenuIconModel
 import com.baidu.infinity.ui.util.getOperationToolIconModels
+import com.baidu.infinity.viewmodel.HomeViewModel
 import com.skydoves.colorpickerview.ColorPickerDialog
 
 class HomeFragment: BaseFragment<FragmentHomeBinding>() {
@@ -111,6 +113,12 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         return FragmentHomeBinding.inflate(layoutInflater)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //配置HomeViewModel
+        HomeViewModel.init(this)
+    }
+
     override fun initView() {
         //配置绘制工具栏
         mBinding.menuIconView.setIconModel(getMenuIconModel())
@@ -119,8 +127,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         mBinding.mainMenuView.setIcons(getHomeMenuIconModels())
         //监听工具点击事件
         mBinding.iconMenuView.iconClickListener = { type ->
-
+            mBinding.drawView.setCurrentDrawType(type)
         }
+
         //绘制工具栏的menu按钮被点击
         mBinding.menuIconView.clickCallback = {
             //如果有正在做动画 就不响应

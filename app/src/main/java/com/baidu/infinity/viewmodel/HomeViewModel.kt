@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.baidu.infinity.model.IconModel
+import com.baidu.infinity.ui.fragment.home.draw.LayerManager
 import com.baidu.infinity.ui.util.dp2pxF
 import com.baidu.infinity.ui.view.IconTextView
 import java.lang.ref.WeakReference
@@ -24,6 +25,8 @@ class HomeViewModel(application: Application): AndroidViewModel(application) {
     var mColor = Color.BLACK
     //填充方式
     var mStrokeStyle = Paint.Style.FILL_AND_STROKE
+    //保存图层管理器
+    val mLayerManager = LayerManager()
 
     companion object {
         private var instance: HomeViewModel? = null

@@ -36,6 +36,10 @@ abstract class BaseShape {
     fun setStartPoint(x:Float,y:Float){
         startX = x
         startY = y
+        //保存当前选择的颜色
+        mPaint.color = HomeViewModel.instance().mColor
+        mPaint.strokeWidth = HomeViewModel.instance().mStrokeWidth
+        mPaint.style = HomeViewModel.instance().mStrokeStyle
     }
     //设置图形的终点坐标
     fun setEndPoint(x:Float,y:Float){

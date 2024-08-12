@@ -70,6 +70,13 @@ class DrawView(
         return true
     }
 
+    /**
+     * 重置当前绘图工具为 NONE
+     */
+    fun resetDrawToolType(){
+        mActionType = ActionType.NONE
+    }
+    //设置当前选中的绘图工具类型
     fun setCurrentDrawType(type: OperationType){
         when (type){
             OperationType.DRAW_MENU -> mActionType = ActionType.NONE

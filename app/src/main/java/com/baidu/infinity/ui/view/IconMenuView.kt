@@ -79,16 +79,23 @@ class IconMenuView(
                 mCurrentSelectedView = iconTextView
                 //告诉外部自己是什么类型的工具
                 iconClickListener(iconTextView.mIconModel!!.type, IconState.SELECTED)
-                toast("选中 ${iconTextView.mIconModel!!.type}")
             }else{
                 //是同一个 取消之前的选中状态
                 iconTextView.updateIconState(IconState.NORMAL)
                 mCurrentSelectedView!!.updateIconState(IconState.NORMAL)
                 mCurrentSelectedView = null
                 iconClickListener(iconTextView.mIconModel!!.type, IconState.NORMAL)
-                toast("取消选中 ${iconTextView.mIconModel!!.type}")
             }
         }
+    }
+
+    //重置选中的Icon的状态
+    fun resetIconState(){
+        //没有选择任何控件
+        if (mCurrentSelectedView == null) return
+
+        mCurrentSelectedView!!.updateIconState(IconState.NORMAL)
+        mCurrentSelectedView = null
     }
 }
 

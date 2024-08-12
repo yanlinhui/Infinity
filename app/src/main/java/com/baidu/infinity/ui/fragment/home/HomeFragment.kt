@@ -3,6 +3,7 @@ package com.baidu.infinity.ui.fragment.home
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.WindowManager.LayoutParams
@@ -132,6 +133,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
             contentView = colorPickerBinding.root
             width = LayoutParams.WRAP_CONTENT
             height = LayoutParams.WRAP_CONTENT
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             //isFocusable = true
             //isOutsideTouchable = true
         }
@@ -165,6 +167,13 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
                 //关闭动画
                 drawMenuCloseAnim.start()
                 actionMenuHideAnim.start()
+                //如果有弹出色盘就隐藏
+                hideColorPicker()
+                //处理action图标的状态
+                mBinding.actionMenuView.resetIconState()
+                mBinding.iconMenuView.resetIconState()
+                //重置一下当前绘图工具为None
+                mBinding.drawView.resetDrawToolType()
             }else{
                 drawMenuOpenAnim.start()
                 actionMenuShowAnim.start()

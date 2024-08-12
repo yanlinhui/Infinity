@@ -8,10 +8,6 @@ import com.baidu.infinity.viewmodel.HomeViewModel
  */
 class CircleShape: BaseShape() {
     override fun draw(canvas: Canvas) {
-        //设置画笔信息
-        mPaint.strokeWidth = HomeViewModel.instance().mStrokeWidth
-        mPaint.color = HomeViewModel.instance().mColor
-        mPaint.style = HomeViewModel.instance().mStrokeStyle
         //绘制椭圆
         canvas.drawOval(rectF,mPaint)
     }

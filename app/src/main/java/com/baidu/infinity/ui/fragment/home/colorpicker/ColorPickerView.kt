@@ -105,6 +105,9 @@ class ColorPickerView(
 
         //将HSV转化为Color
         mSelectedColor = Color.HSVToColor(floatArrayOf(mHue,mSturation,mLightness))
+        //随时将最新的颜色回传
+        mCallBack(mSelectedColor)
+
         mSelectPaint.color = mSelectedColor
         canvas.drawCircle(mTouchX,mTouchY,mSelectRadius,mSelectPaint)
     }
@@ -133,8 +136,24 @@ class ColorPickerView(
         return true
     }
 
+    //获取颜色
+    fun getCurrentColor():Int{
+        return mSelectedColor
+    }
+
+    //监听颜色选中事件
     fun addPickColorListener(listener:(Int)->Unit){
         mCallBack = listener
+    }
+    //设置饱和度
+    fun setSaturation(value: Float){
+        mSturation = value
+        invalidate()
+    }
+    //设置亮度
+    fun setLightness(value: Float){
+        mLightness = value
+        invalidate()
     }
 }
 

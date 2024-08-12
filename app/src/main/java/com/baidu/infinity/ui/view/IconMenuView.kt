@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.baidu.infinity.model.IconModel
 import com.baidu.infinity.ui.util.IconState
 import com.baidu.infinity.ui.util.OperationType
@@ -26,7 +27,7 @@ class IconMenuView(
     private var mWidth = defaultWidth
     private var mHeight = defaultHeight
     private var mCurrentSelectedView:IconTextView? = null
-    var iconClickListener:(OperationType)->Unit = {}
+    var iconClickListener:(OperationType,IconState)->Unit = {_,_ ->}
 
     //给外部提供一个设置数据模型的方法
     fun setIcons(icons: List<IconModel>) {
@@ -60,11 +61,12 @@ class IconMenuView(
     private fun dealWithCallback(iconTextView: IconTextView){
         //判断是否有选中的
         if (mCurrentSelectedView == null){
+            toast("选中 ${iconTextView.mIconModel!!.type}")
             //选中当前这个
             iconTextView.updateIconState(IconState.SELECTED)
             mCurrentSelectedView = iconTextView
             //告诉外部自己是什么类型的工具
-            iconClickListener(iconTextView.mIconModel!!.type)
+            iconClickListener(iconTextView.mIconModel!!.type, IconState.SELECTED)
         }else{
             //之前选中过
             //判断是否是同一个
@@ -76,7 +78,15 @@ class IconMenuView(
                 //保存这个对象
                 mCurrentSelectedView = iconTextView
                 //告诉外部自己是什么类型的工具
-                iconClickListener(iconTextView.mIconModel!!.type)
+                iconClickListener(iconTextView.mIconModel!!.type, IconState.SELECTED)
+                toast("选中 ${iconTextView.mIconModel!!.type}")
+            }else{
+                //是同一个 取消之前的选中状态
+                iconTextView.updateIconState(IconState.NORMAL)
+                mCurrentSelectedView!!.updateIconState(IconState.NORMAL)
+                mCurrentSelectedView = null
+                iconClickListener(iconTextView.mIconModel!!.type, IconState.NORMAL)
+                toast("取消选中 ${iconTextView.mIconModel!!.type}")
             }
         }
     }

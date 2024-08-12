@@ -12,16 +12,22 @@
         <action
             android:id="@+id/action_welcomeFragment_to_picLoginFragment"
             app:destination="@id/picLoginFragment"
+            app:enterAnim="@anim/right_in_anim"
+            app:exitAnim="@anim/left_out_anim"
             app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_welcomeFragment_to_pinLoginFragment"
             app:destination="@id/pinLoginFragment"
+            app:enterAnim="@anim/right_in_anim"
+            app:exitAnim="@anim/left_out_anim"
             app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_welcomeFragment_to_homeFragment"
             app:destination="@id/homeFragment"
+            app:enterAnim="@anim/right_in_anim"
+            app:exitAnim="@anim/left_out_anim"
             app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -32,7 +38,9 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_accountCenterFragment"
-            app:destination="@id/accountCenterFragment" />
+            app:destination="@id/accountCenterFragment"
+            app:enterAnim="@anim/right_in_anim"
+            app:exitAnim="@anim/left_out_anim"/>
     </fragment>
     <fragment
         android:id="@+id/accountCenterFragment"
@@ -47,6 +55,8 @@
         <action
             android:id="@+id/action_picLoginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
+            app:enterAnim="@anim/right_in_anim"
+            app:exitAnim="@anim/left_out_anim"
             app:popUpTo="@id/picLoginFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -58,6 +68,8 @@
         <action
             android:id="@+id/action_pinLoginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
+            app:enterAnim="@anim/right_in_anim"
+            app:exitAnim="@anim/left_out_anim"
             app:popUpTo="@id/pinLoginFragment"
             app:popUpToInclusive="true" />
     </fragment>

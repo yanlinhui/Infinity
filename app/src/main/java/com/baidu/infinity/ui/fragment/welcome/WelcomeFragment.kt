@@ -74,13 +74,9 @@ class WelcomeFragment: BaseFragment<FragmentWelcomeLayoutBinding>() {
                 //过期 需要登录
                 //看默认的登陆类型
                 if (user.passwordType == 0){
-                    val extras = FragmentNavigatorExtras(mBinding.animationView to "explode")
+                    //val extras = FragmentNavigatorExtras(mBinding.animationView to "explode")
                     findNavController().navigate(
-                        R.id.action_welcomeFragment_to_pinLoginFragment,
-                        null,
-                        null,
-                        extras
-                    )
+                        R.id.action_welcomeFragment_to_pinLoginFragment)
                 }else{
                     findNavController().navigate(R.id.action_welcomeFragment_to_picLoginFragment)
                 }

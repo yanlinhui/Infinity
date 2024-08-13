@@ -259,8 +259,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
     //刷新recyclerView
     private fun refreshLayerRecyclerView(){
         if (mLayerPopupViewBinding != null){
+            toast("refresh")
             val datas = getLayerData()
-            //mBinding.testiv.setImageBitmap(datas.last().bitmap)
             mLayerPopupViewBinding!!.recyclerView.setDifferModels(datas)
         }
     }
@@ -275,9 +275,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
                 val binding = getBinding<LayerItemLayoutBinding>()
                 //获取当前这个数据模型
                 val data =  getModel<LayerModel>()
-                mBinding.testiv.setImageBitmap(data.bitmap)
                 //绑定内容
-                binding.layerImageView.setImageBitmap(data.bitmap)
+                binding.ivLayer.setImageBitmap(data.bitmap)
             }
         }.models = getLayerData()
     }

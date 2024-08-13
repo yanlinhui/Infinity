@@ -5,9 +5,12 @@ import android.animation.ObjectAnimator
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.view.WindowManager.LayoutParams
 import android.widget.PopupWindow
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.baidu.infinity.R
 import com.baidu.infinity.databinding.ColorPickerLayoutBinding
@@ -16,8 +19,10 @@ import com.baidu.infinity.databinding.LayerItemLayoutBinding
 import com.baidu.infinity.databinding.LayerPopupViewLayoutBinding
 import com.baidu.infinity.model.IconModel
 import com.baidu.infinity.ui.base.BaseFragment
+import com.baidu.infinity.ui.fragment.home.draw.LayerManager
 import com.baidu.infinity.ui.fragment.home.layer.LayerModel
-import com.baidu.infinity.ui.fragment.home.layer.getLayerData
+import com.baidu.infinity.ui.fragment.home.layer.LayerModelManager
+import com.baidu.infinity.ui.fragment.home.layer.LayerState
 import com.baidu.infinity.ui.fragment.home.view.HSVColorPickerView
 import com.baidu.infinity.ui.util.IconState
 import com.baidu.infinity.ui.util.OperationType
@@ -29,6 +34,8 @@ import com.baidu.infinity.ui.util.getMenuIconModel
 import com.baidu.infinity.ui.util.getOperationToolIconModels
 import com.baidu.infinity.ui.util.toast
 import com.baidu.infinity.viewmodel.HomeViewModel
+import com.drake.brv.BindingAdapter
+import com.drake.brv.listener.DefaultItemTouchCallback
 import com.drake.brv.utils.bindingAdapter
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.models
@@ -259,9 +266,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
     //刷新recyclerView
     private fun refreshLayerRecyclerView(){
         if (mLayerPopupViewBinding != null){
-            toast("refresh")
-            val datas = getLayerData()
-            mLayerPopupViewBinding!!.recyclerView.setDifferModels(datas)
+            val datas = LayerModelManager.instance.getLayerModels()
+            mLayerPopupViewBinding!!.recyclerView.models = datas
         }
     }
 
@@ -277,8 +283,60 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
                 val data =  getModel<LayerModel>()
                 //绑定内容
                 binding.ivLayer.setImageBitmap(data.bitmap)
+                //设置边框是否显示
+                binding.coverView.visibility = if (data.state == LayerState.NORMAL){
+                    View.INVISIBLE
+                }else{
+                    View.VISIBLE
+                }
+                //添加点击事件
+                binding.root.setOnClickListener {
+                    //修改数据源
+                    LayerModelManager.instance.selectLayer(data)
+                    //刷新界面
+                    refreshLayerRecyclerView()
+                }
             }
-        }.models = getLayerData()
+
+            //处理拖拽和滑动事件
+            itemTouchHelper = ItemTouchHelper(object : DefaultItemTouchCallback(){
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    super.onSwiped(viewHolder, direction)
+                    //获取索引值
+                    val index = viewHolder.layoutPosition
+                    //获取对应的数据模型
+                    val model = (viewHolder as BindingAdapter.BindingViewHolder).getModel<LayerModel>()
+                    //删除数据源中对应的数据
+                    LayerModelManager.instance.resetCurrentSelected(index,model)
+                    //删除对应的layer图层
+                    HomeViewModel.instance().mLayerManager.removeLayer(model.id)
+                    //刷新数据
+                    refreshLayerRecyclerView()
+                    //DrawView重新绘制
+                    mBinding.drawView.refresh()
+                }
+
+                override fun onDrag(
+                    source: BindingAdapter.BindingViewHolder,
+                    target: BindingAdapter.BindingViewHolder
+                ) {
+                    super.onDrag(source, target)
+                    //获取交换的对象的索引值
+                    val sourceIndex = source.layoutPosition
+                    val targetIndex = target.layoutPosition
+                    //获取模型数据
+                    val sLayerModel = source.getModel<LayerModel>()
+                    val tLayerModel = target.getModel<LayerModel>()
+
+                    //不需要修改数据，BRV自动实现了
+                    //LayerModelManager.instance.switchLayer(sourceIndex,targetIndex)
+                    //修改图层
+                    HomeViewModel.instance().mLayerManager.switchLayer(sourceIndex,targetIndex)
+                    //刷新DrawView
+                    mBinding.drawView.refresh()
+                }
+            })
+        }.models = LayerModelManager.instance.getLayerModels()
     }
     //隐藏图层视图
     private fun hideLayerView(){

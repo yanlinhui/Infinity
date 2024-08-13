@@ -32,6 +32,11 @@ class DrawView(
         layerManager.addLayer(measuredWidth,measuredHeight)
     }
 
+    //刷新
+    fun refresh(){
+        invalidate()
+    }
+
     override fun onDraw(canvas: Canvas) {
         //每个图层负责把自己图层的内容绘制到Bitmap中
         layerManager.draw()

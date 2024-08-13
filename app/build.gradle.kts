@@ -93,4 +93,7 @@ dependencies {
 
     //colorpickerView
     implementation(libs.colorpickerview)
+
+    //brv
+    implementation(libs.brv)
 }

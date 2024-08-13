@@ -118,16 +118,20 @@ class ColorPickerView(
                 mTouchX = event.x
                 mTouchY = event.y
 
-                //计算色相值 0-360
-                //计算触摸点的角度
-                val radians = Math.atan2((mTouchY-centerY).toDouble(),(mTouchX-centerX).toDouble())
-                //将弧度转化为角度
-                var degree = Math.toDegrees(radians)
-                if (degree < 0){
-                    degree = 360 - Math.abs(degree)
+                //计算是否在圆的内部
+                if (isInPickerView(mTouchX,mTouchY)) {
+                    //计算色相值 0-360
+                    //计算触摸点的角度
+                    val radians =
+                        Math.atan2((mTouchY - centerY).toDouble(), (mTouchX - centerX).toDouble())
+                    //将弧度转化为角度
+                    var degree = Math.toDegrees(radians)
+                    if (degree < 0) {
+                        degree = 360 - Math.abs(degree)
+                    }
+                    mHue = degree.toFloat()
+                    invalidate()
                 }
-                mHue = degree.toFloat()
-                invalidate()
             }
             MotionEvent.ACTION_UP ->{
                 mCallBack(mSelectedColor)
@@ -154,6 +158,14 @@ class ColorPickerView(
     fun setLightness(value: Float){
         mLightness = value
         invalidate()
+    }
+
+    //计算触摸点是否在圆的内部
+    private fun isInPickerView(x:Float, y:Float):Boolean{
+        val a = Math.abs(x - centerX)
+        val b = Math.abs(y - centerY)
+        val c = Math.sqrt(a*a + b*b.toDouble())
+        return c <= mColorPickerRadius
     }
 }
 

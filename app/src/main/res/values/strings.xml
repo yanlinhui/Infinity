@@ -22,6 +22,8 @@
     <string name="picture">&#xe621;</string>
     <string name="account">&#xe63b;</string>
     <string name="layer">&#xe768;</string>
+    <string name="add">&#xe60e;</string>
+    <string name="deleteCircle">&#xe652;</string>
 
     <string   name="undo" >&#xe624;</string>
     <string   name="garbage">&#xe6a6;</string>
@@ -33,7 +35,7 @@
     <string name="change_password_type">&#xe87b;</string>
     <string name="close_arrow">&#xe676;</string>
     <string name="open_arrow">&#xe675;</string>
-    <string name="deletex">&#xe651;</string>
+    <string name="deleteX">&#xe651;</string>
     <string name="go_back">&#xe601;</string>
 
 </resources>

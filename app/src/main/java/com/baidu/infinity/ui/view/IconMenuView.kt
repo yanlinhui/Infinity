@@ -61,7 +61,6 @@ class IconMenuView(
     private fun dealWithCallback(iconTextView: IconTextView){
         //判断是否有选中的
         if (mCurrentSelectedView == null){
-            toast("选中 ${iconTextView.mIconModel!!.type}")
             //选中当前这个
             iconTextView.updateIconState(IconState.SELECTED)
             mCurrentSelectedView = iconTextView

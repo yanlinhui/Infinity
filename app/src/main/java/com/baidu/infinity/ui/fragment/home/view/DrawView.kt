@@ -23,6 +23,8 @@ class DrawView(
     private val layerManager:LayerManager by lazy {
         HomeViewModel.instance().mLayerManager
     }
+    //刷新事件
+    var refreshLayerListener:()->Unit = {}
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -63,8 +65,13 @@ class DrawView(
                 }
 
             }
+            /**
+             HomeViewModel-> mLayerManager
+             HomeFragment -> loadData
+             */
             MotionEvent.ACTION_UP ->{
-
+                //当前绘制完毕，提醒外部刷新layer的数据
+                refreshLayerListener()
             }
         }
         return true

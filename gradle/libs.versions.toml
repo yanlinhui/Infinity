@@ -18,6 +18,7 @@ navigationArg = "2.7.7"
 lottie = "6.5.0"
 shape = "1.4.7"
 colorpicker = "2.3.0"
+brv = "1.6.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -56,8 +57,12 @@ airbnb-lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "
 #shapeofview
 shapeofview = { group = "io.github.florent37", name = "shapeofview", version.ref = "shape"}
 
+#colorpicker
 colorpickerview = { group = "com.github.skydoves", name = "colorpickerview", version.ref = "colorpicker"}
-#com.github.skydoves:colorpickerview:2.3.0
+
+#brv
+brv = { group = "com.github.liangjingkanji", name = "BRV", version.ref = "brv" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

@@ -272,12 +272,12 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
             //绑定数据 LayerModel和layout中相关联
             onBind {
                 //获取item绑定类对象
-                val b = LayerItemLayoutBinding.inflate(layoutInflater)
+                val binding = getBinding<LayerItemLayoutBinding>()
                 //获取当前这个数据模型
-                val data = getModel<LayerModel>()
+                val data =  getModel<LayerModel>()
                 mBinding.testiv.setImageBitmap(data.bitmap)
                 //绑定内容
-                b.layerImageView.setImageBitmap(data.bitmap)
+                binding.layerImageView.setImageBitmap(data.bitmap)
             }
         }.models = getLayerData()
     }

@@ -10,6 +10,7 @@ import com.baidu.infinity.ui.fragment.home.draw.shapes.FreeCurveShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.LineShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.LocationShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.RectangleShape
+import com.baidu.infinity.ui.fragment.home.draw.shapes.TextShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.TriangleShape
 
 /**
@@ -60,6 +61,9 @@ class Layer(val id: Int,val width:Int, val height:Int) {
             ShapeType.Location ->{ //画坐标轴
                 LocationShape()
             }
+            ShapeType.Text ->{ //绘制文本
+                TextShape()
+            }
             else -> {null}
         }
 
@@ -95,6 +99,13 @@ class Layer(val id: Int,val width:Int, val height:Int) {
     //TODO --
     fun clear(){
         mShapes.clear()
+    }
+
+    //跟新内容
+    fun updateText(text: String){
+        //拿到绘制文本的shape
+        val textShape = mShapes.last() as TextShape
+        textShape.updateText(text)
     }
 
     //获取当前正在操作的图形

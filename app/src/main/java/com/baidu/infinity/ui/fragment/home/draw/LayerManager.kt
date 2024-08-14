@@ -109,6 +109,11 @@ class LayerManager {
         getCurrentLayer()?.clear()
     }
 
+    //修改绘制的文本
+    fun updateText(text: String){
+        getCurrentLayer()?.updateText(text)
+    }
+
     //通过id找一个图层
     private fun getLayerWidthId(id:Int):Layer?{
         layers.forEach {

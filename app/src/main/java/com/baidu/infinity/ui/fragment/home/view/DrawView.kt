@@ -25,6 +25,11 @@ class DrawView(
     }
     //刷新事件
     var refreshLayerListener:()->Unit = {}
+    //回调显示键盘的消息
+    var addShowKeyboardListener:(Boolean)->Unit = {}
+
+    //记录文本的输入状态
+    private var mTextState = TextSate.NONE
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -56,6 +61,24 @@ class DrawView(
                 when (mActionType){
                     ActionType.DRAW -> {
                         layerManager.addShape(mDrawShapeType,event.x, event.y)
+                        //如果是文本就弹出键盘
+                        if (mDrawShapeType == ShapeType.Text){
+                            //判断当前文本的状态
+                            if (mTextState == TextSate.NONE){
+                                //现在需要绘制文本
+                                //弹出键盘
+                                addShowKeyboardListener(true)
+                                //进入文本的编辑状态
+                                mTextState = TextSate.EDITING
+                            }else{
+                                //编辑完毕
+                                //退出编辑状态
+                                //隐藏键盘
+                                addShowKeyboardListener(false)
+                                //退出编辑状态
+                                mTextState = TextSate.NONE
+                            }
+                        }
                     }
                     else -> {}
                 }
@@ -83,11 +106,22 @@ class DrawView(
     }
 
     /**
+     * 接收实时文本
+     */
+    fun refreshText(text: String){
+        //显示文本
+        HomeViewModel.instance().mLayerManager.updateText(text)
+        //重绘
+        invalidate()
+    }
+
+    /**
      * 重置当前绘图工具为 NONE
      */
     fun resetDrawToolType(){
         mActionType = ActionType.NONE
     }
+
     //设置当前选中的绘图工具类型
     fun setCurrentDrawType(type: OperationType){
         when (type){
@@ -106,6 +140,7 @@ class DrawView(
                     OperationType.DRAW_BEZEL -> mDrawShapeType = ShapeType.Bezel
                     OperationType.DRAW_LINE_ARROW -> mDrawShapeType = ShapeType.Arrow
                     OperationType.DRAW_LOCATION -> mDrawShapeType = ShapeType.Location
+                    OperationType.DRAW_TEXT -> mDrawShapeType = ShapeType.Text
                     else -> mDrawShapeType = ShapeType.NONE
                 }
             }

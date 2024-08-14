@@ -8,8 +8,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.WindowInsetsController
 import android.view.WindowManager.LayoutParams
 import android.widget.PopupWindow
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.baidu.infinity.R
@@ -294,8 +298,39 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         mBinding.drawView.refreshLayerListener = {
             refreshLayerRecyclerView()
         }
+
+        //监听输入框的内容改变的事件
+        mBinding.edInput.addTextChangedListener(afterTextChanged = {
+            //将现有的文本拿给DrawView显示
+            Log.v("pxd",it.toString())
+            mBinding.drawView.refreshText(it.toString())
+        })
+        //监听drawView上要绘制文本的事件
+        mBinding.drawView.addShowKeyboardListener = { isShow ->
+            if (isShow) {
+                //让输入框获得焦点
+                mBinding.edInput.requestFocus()
+                //弹出键盘
+                showKeyboard()
+            }else{
+                //隐藏
+                mBinding.edInput.clearFocus()
+                hideKeyboard()
+                //清空文本内容
+                mBinding.edInput.text.clear()
+            }
+        }
     }
 
+    //弹出键盘
+    private fun showKeyboard(){
+        val insetsController = WindowCompat.getInsetsController(requireActivity().window,mBinding.edInput)
+        insetsController.show(WindowInsetsCompat.Type.ime())
+    }
+    private fun hideKeyboard(){
+        val insetsController = WindowCompat.getInsetsController(requireActivity().window,mBinding.edInput)
+        insetsController.hide(WindowInsetsCompat.Type.ime())
+    }
     //刷新recyclerView
     private fun refreshLayerRecyclerView(){
         if (mLayerPopupViewBinding != null){

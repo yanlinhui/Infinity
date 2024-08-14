@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
+import android.util.TypedValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -25,6 +26,13 @@ class HomeViewModel(application: Application): AndroidViewModel(application) {
     var mColor = Color.BLACK
     //填充方式
     var mStrokeStyle = Paint.Style.FILL_AND_STROKE
+    //文字大小
+    var mTextSize = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_SP,
+        18f,
+        application.applicationContext.resources.displayMetrics
+    )
+
     //保存图层管理器
     val mLayerManager = LayerManager()
 

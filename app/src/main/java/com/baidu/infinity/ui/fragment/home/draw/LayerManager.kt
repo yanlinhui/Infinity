@@ -1,6 +1,7 @@
 package com.baidu.infinity.ui.fragment.home.draw
 
 import android.graphics.Bitmap
+import androidx.room.util.foreignKeyCheck
 import com.baidu.infinity.ui.fragment.home.layer.LayerModelManager
 
 class LayerManager {
@@ -10,7 +11,8 @@ class LayerManager {
     //添加图层
     fun addLayer(width: Int, height: Int){
         Layer(layers.size+1,width, height).apply {
-            layers.add(this)
+            //新的图层添加在第一个
+            layers.add(0,this)
 
             //修改模型数据
             LayerModelManager.instance.addLayer(this)
@@ -71,7 +73,9 @@ class LayerManager {
     //获取所有图层的Bitmap
     fun getLayersBitmap(): List<Bitmap>{
         val bitmapList = arrayListOf<Bitmap>()
-        layers.forEach { layer ->
+        //注意反序 3 2 1
+        //1  2  3
+        for (layer in layers.asReversed()){
             bitmapList.add(layer.getBitmap())
         }
         return bitmapList
@@ -90,7 +94,7 @@ class LayerManager {
     //提供给外部统一绘制
     //绘制所有图层
     fun draw(){
-        layers.forEach { layer ->
+        for (layer in layers.asReversed()){
             layer.draw()
         }
     }
@@ -101,8 +105,7 @@ class LayerManager {
     }
 
     //清空图层
-    //TODO --
-    fun clear(){
+    fun clearLayer(){
         getCurrentLayer()?.clear()
     }
 

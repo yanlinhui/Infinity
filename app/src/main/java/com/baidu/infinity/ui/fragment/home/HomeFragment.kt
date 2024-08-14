@@ -26,6 +26,7 @@ import com.baidu.infinity.ui.fragment.home.layer.LayerState
 import com.baidu.infinity.ui.fragment.home.view.HSVColorPickerView
 import com.baidu.infinity.ui.util.IconState
 import com.baidu.infinity.ui.util.OperationType
+import com.baidu.infinity.ui.util.delayTask
 import com.baidu.infinity.ui.util.dp2px
 import com.baidu.infinity.ui.util.dp2pxF
 import com.baidu.infinity.ui.util.getDrawToolIconModels
@@ -191,7 +192,11 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         mBinding.mainMenuView.setIcons(getHomeMenuIconModels())
         //监听工具点击事件
         mBinding.iconMenuView.iconClickListener = { type,state ->
-            mBinding.drawView.setCurrentDrawType(type)
+            if (state == IconState.NORMAL) {
+                mBinding.drawView.setCurrentDrawType(OperationType.NONE)
+            }else{
+                mBinding.drawView.setCurrentDrawType(type)
+            }
         }
         //绘制工具栏的menu按钮被点击
         mBinding.menuIconView.clickCallback = {
@@ -239,6 +244,34 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
                     }else {
                         showColorPicker()
                     }
+                }
+                OperationType.OPERATION_UNDO ->{
+                    //重置按钮的状态
+                    delayTask(200){
+                        mBinding.actionMenuView.resetIconState()
+                    }
+
+                    //撤销
+                    //修改当前layer对应的shapes 从中移除
+                    HomeViewModel.instance().mLayerManager.undo()
+                    //刷新DrawView
+                    mBinding.drawView.refresh()
+                    //刷新图层视图
+                    refreshLayerRecyclerView()
+                }
+                OperationType.OPERATION_DELETE ->{
+                    //重置按钮的状态
+                    delayTask(200){
+                        mBinding.actionMenuView.resetIconState()
+                    }
+
+                    //撤销
+                    //修改当前layer对应的shapes 从中移除
+                    HomeViewModel.instance().mLayerManager.clearLayer()
+                    //刷新DrawView
+                    mBinding.drawView.refresh()
+                    //刷新图层视图
+                    refreshLayerRecyclerView()
                 }
                 else -> {}
             }

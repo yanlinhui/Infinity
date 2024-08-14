@@ -91,6 +91,7 @@ class DrawView(
     //设置当前选中的绘图工具类型
     fun setCurrentDrawType(type: OperationType){
         when (type){
+            OperationType.NONE -> mActionType = ActionType.NONE
             OperationType.DRAW_MENU -> mActionType = ActionType.NONE
             OperationType.DRAW_MOVE -> mActionType = ActionType.MOVE
             OperationType.DRAW_ERASER -> mActionType = ActionType.ERASER

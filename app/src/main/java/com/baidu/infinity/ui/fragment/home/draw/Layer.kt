@@ -3,7 +3,12 @@ package com.baidu.infinity.ui.fragment.home.draw
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.util.Log
+import com.baidu.infinity.ui.fragment.home.draw.shapes.BezelShape
+import com.baidu.infinity.ui.fragment.home.draw.shapes.CircleShape
+import com.baidu.infinity.ui.fragment.home.draw.shapes.FreeCurveShape
+import com.baidu.infinity.ui.fragment.home.draw.shapes.LineShape
+import com.baidu.infinity.ui.fragment.home.draw.shapes.RectangleShape
+import com.baidu.infinity.ui.fragment.home.draw.shapes.TriangleShape
 
 /**
  * 管理图层
@@ -27,17 +32,36 @@ class Layer(val id: Int,val width:Int, val height:Int) {
 
     //当手触摸到屏幕 并且 是在绘制形状时 添加图形
     fun addShape(type: ShapeType, startX: Float, startY: Float){
-        when (type){
+        var tShape: BaseShape? = null
+        tShape = when (type){
             ShapeType.Circle -> {//创建圆形
-                CircleShape().apply {
-                    //设置起始点坐标
-                    setStartPoint(startX,startY)
-                    //保存这个图形
-                    mShapes.add(this)
-                }
+                CircleShape()
             }
-            else -> {}
+            ShapeType.Rectangle ->{ //矩形
+                RectangleShape()
+            }
+            ShapeType.Line ->{ //直线
+                LineShape()
+            }
+            ShapeType.Curve ->{//随意画
+                FreeCurveShape()
+            }
+            ShapeType.Triangle ->{//三角形
+                TriangleShape()
+            }
+            ShapeType.Bezel ->{ //贝塞尔曲线
+                BezelShape()
+            }
+            else -> {null}
         }
+
+        tShape?.let {
+            //设置起始点坐标
+            it.setStartPoint(startX,startY)
+            //保存这个图形
+            mShapes.add(it)
+        }
+
     }
     //设置当前移动过程中的触摸点
     fun addEndPoint(endX: Float, endY: Float){

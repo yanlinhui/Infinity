@@ -15,10 +15,10 @@ import com.baidu.infinity.viewmodel.HomeViewModel
  * 判断是否在区域内
  */
 abstract class BaseShape {
-    private var startX:Float = 0f
-    private var startY:Float = 0f
-    private var endX:Float = 0f
-    private var endY:Float = 0f
+    protected var startX:Float = 0f
+    protected var startY:Float = 0f
+    protected var endX:Float = 0f
+    protected var endY:Float = 0f
 
     //中心点
     var centerX:Float = 0f
@@ -30,10 +30,12 @@ abstract class BaseShape {
         strokeWidth = HomeViewModel.instance().mStrokeWidth
         color = HomeViewModel.instance().mColor
         style = HomeViewModel.instance().mStrokeStyle
+        strokeJoin = Paint.Join.ROUND
+        strokeCap = Paint.Cap.ROUND
     }
 
     //设置图形起始坐标
-    fun setStartPoint(x:Float,y:Float){
+    open fun setStartPoint(x:Float,y:Float){
         startX = x
         startY = y
         //保存当前选择的颜色
@@ -42,7 +44,7 @@ abstract class BaseShape {
         mPaint.style = HomeViewModel.instance().mStrokeStyle
     }
     //设置图形的终点坐标
-    fun setEndPoint(x:Float,y:Float){
+    open fun setEndPoint(x:Float,y:Float){
         endX = x
         endY = y
         //计算中心点

@@ -99,6 +99,11 @@ class DrawView(
                 mActionType = ActionType.DRAW
                 when (type) {
                     OperationType.DRAW_CIRCLE -> mDrawShapeType = ShapeType.Circle
+                    OperationType.DRAW_RECTANGLE -> mDrawShapeType = ShapeType.Rectangle
+                    OperationType.DRAW_LINE -> mDrawShapeType = ShapeType.Line
+                    OperationType.DRAW_CURVE -> mDrawShapeType = ShapeType.Curve
+                    OperationType.DRAW_TRIANGLE -> mDrawShapeType = ShapeType.Triangle
+                    OperationType.DRAW_BEZEL -> mDrawShapeType = ShapeType.Bezel
                     else -> mDrawShapeType = ShapeType.NONE
                 }
             }

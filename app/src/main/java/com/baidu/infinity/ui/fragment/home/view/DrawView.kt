@@ -104,6 +104,8 @@ class DrawView(
                     OperationType.DRAW_CURVE -> mDrawShapeType = ShapeType.Curve
                     OperationType.DRAW_TRIANGLE -> mDrawShapeType = ShapeType.Triangle
                     OperationType.DRAW_BEZEL -> mDrawShapeType = ShapeType.Bezel
+                    OperationType.DRAW_LINE_ARROW -> mDrawShapeType = ShapeType.Arrow
+                    OperationType.DRAW_LOCATION -> mDrawShapeType = ShapeType.Location
                     else -> mDrawShapeType = ShapeType.NONE
                 }
             }

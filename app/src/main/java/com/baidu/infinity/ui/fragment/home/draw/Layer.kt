@@ -3,10 +3,12 @@ package com.baidu.infinity.ui.fragment.home.draw
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import com.baidu.infinity.ui.fragment.home.draw.shapes.ArrowLineShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.BezelShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.CircleShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.FreeCurveShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.LineShape
+import com.baidu.infinity.ui.fragment.home.draw.shapes.LocationShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.RectangleShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.TriangleShape
 
@@ -51,6 +53,12 @@ class Layer(val id: Int,val width:Int, val height:Int) {
             }
             ShapeType.Bezel ->{ //贝塞尔曲线
                 BezelShape()
+            }
+            ShapeType.Arrow ->{ //箭头
+                ArrowLineShape()
+            }
+            ShapeType.Location ->{ //画坐标轴
+                LocationShape()
             }
             else -> {null}
         }

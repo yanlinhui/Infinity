@@ -28,6 +28,9 @@ class HomeViewModel(application: Application): AndroidViewModel(application) {
     //保存图层管理器
     val mLayerManager = LayerManager()
 
+    fun getContext():Context{
+        return getApplication()
+    }
     companion object {
         private var instance: HomeViewModel? = null
         //使用我这个之前必须先调用init方法

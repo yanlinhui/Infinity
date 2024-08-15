@@ -6,4 +6,5 @@ package com.baidu.infinity.ui.fragment.home.view
 enum class ShapeState {
     NORMAL,//正常状态
     DRAWING, //绘制状态
+    SELECT,//移动时选中状态
 }

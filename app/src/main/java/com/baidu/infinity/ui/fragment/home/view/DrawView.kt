@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Canvas
+import android.graphics.Region
 import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
@@ -138,6 +139,14 @@ class DrawView(
                             }
                         }
                     }
+                    ActionType.FILL -> {
+                        layerManager.fillColor(event.x, event.y)
+                        invalidate()
+                    }
+                    ActionType.MOVE -> {
+                        layerManager.selectShape(event.x, event.y)
+                        invalidate()
+                    }
                     else -> {}
                 }
             }
@@ -160,7 +169,7 @@ class DrawView(
                 refreshLayerListener()
                 //修改当前图形的编辑状态为正常
                 //文字的状态不在这里修改，除了文字都需要在这里修改状态
-                if (mDrawShapeType != ShapeType.Text) {
+                if (mDrawShapeType != ShapeType.Text && mActionType != ActionType.MOVE) {
                     layerManager.updateShapeState(ShapeState.NORMAL)
                     invalidate()
                 }
@@ -189,9 +198,26 @@ class DrawView(
     //设置当前选中的绘图工具类型
     fun setCurrentDrawType(type: OperationType){
         when (type){
-            OperationType.NONE -> mActionType = ActionType.NONE
-            OperationType.DRAW_MENU -> mActionType = ActionType.NONE
-            OperationType.DRAW_MOVE -> mActionType = ActionType.MOVE
+            OperationType.NONE -> {
+                mActionType = ActionType.NONE
+                mDrawShapeType = ShapeType.NONE
+                mTextState = TextSate.NONE
+            }
+            OperationType.DRAW_MENU -> {
+                mActionType = ActionType.NONE
+                mDrawShapeType = ShapeType.NONE
+                mTextState = TextSate.NONE
+            }
+            OperationType.DRAW_MOVE -> {
+                mActionType = ActionType.MOVE
+                mDrawShapeType = ShapeType.NONE
+                mTextState = TextSate.NONE
+            }
+            OperationType.DRAW_BRUSH -> {
+                mActionType = ActionType.FILL
+                mDrawShapeType = ShapeType.NONE
+                mTextState = TextSate.NONE
+            }
             else -> {
                 mActionType = ActionType.DRAW
                 when (type) {

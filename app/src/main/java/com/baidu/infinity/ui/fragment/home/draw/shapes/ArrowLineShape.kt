@@ -12,7 +12,6 @@ import com.baidu.infinity.viewmodel.HomeViewModel
  * 圆形
  */
 class ArrowLineShape: BaseShape() {
-    private val mPath = Path()
     private val mArrowDegree = 30f //箭头默认的夹角度数
     private val mArrowLength = HomeViewModel.instance().getContext().dp2pxF(10)
 
@@ -29,14 +28,13 @@ class ArrowLineShape: BaseShape() {
         //绘制箭头
         ArrowPath.addArrowToPath(mPath,startX,startY,endX,endY,mArrowLength)
     }
+
     override fun draw(canvas: Canvas) {
         //绘制椭圆
         canvas.drawPath(mPath,mPaint)
+
     }
 
-    override fun containsPoint(x: Float, y: Float): Boolean {
-        return true
-    }
 
     //tan 比例转度数
     private fun rate2degree(rate: Double):Double{

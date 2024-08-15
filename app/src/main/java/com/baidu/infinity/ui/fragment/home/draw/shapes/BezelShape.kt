@@ -9,8 +9,6 @@ import com.baidu.infinity.ui.fragment.home.draw.BaseShape
  * 圆形
  */
 class BezelShape: BaseShape() {
-    private val mPath = Path()
-
     override fun setStartPoint(x: Float, y: Float) {
         super.setStartPoint(x, y)
         mPaint.style = Paint.Style.STROKE
@@ -42,9 +40,8 @@ class BezelShape: BaseShape() {
     override fun draw(canvas: Canvas) {
         //绘制椭圆
         canvas.drawPath(mPath,mPaint)
+        //先让父类统一绘制选中时的边框
+        super.draw(canvas)
     }
 
-    override fun containsPoint(x: Float, y: Float): Boolean {
-        return true
-    }
 }

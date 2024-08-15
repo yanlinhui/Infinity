@@ -3,6 +3,7 @@ package com.baidu.infinity.ui.fragment.home.draw.shapes
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.Region
 import com.baidu.infinity.ui.fragment.home.draw.ArrowPath
 import com.baidu.infinity.ui.fragment.home.draw.BaseShape
 import com.baidu.infinity.ui.util.dp2pxF
@@ -12,7 +13,6 @@ import com.baidu.infinity.viewmodel.HomeViewModel
  * 圆形
  */
 class LocationShape: BaseShape() {
-    private val mPath = Path()
     private val mArrowLength = HomeViewModel.instance().getContext().dp2pxF(10)
 
     //重写父类方法
@@ -46,11 +46,10 @@ class LocationShape: BaseShape() {
     override fun draw(canvas: Canvas) {
         //绘制椭圆
         canvas.drawPath(mPath,mPaint)
+        //先让父类统一绘制选中时的边框
+        super.draw(canvas)
     }
 
-    override fun containsPoint(x: Float, y: Float): Boolean {
-        return true
-    }
 
     //tan 比例转度数
     private fun rate2degree(rate: Double):Double{

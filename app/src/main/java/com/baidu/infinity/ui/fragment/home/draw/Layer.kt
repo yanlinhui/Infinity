@@ -118,6 +118,27 @@ class Layer(val id: Int,val width:Int, val height:Int) {
         textShape.updateText(text)
     }
 
+    //填充颜色
+    fun fillColor(x:Float, y:Float){
+        //倒叙遍历数组
+        for (shape in mShapes.asReversed()){
+            if (shape.containsPoint(x,y)){
+                shape.fillColor()
+            }
+        }
+    }
+
+    //移动时选中图形
+    fun selectShape(x:Float, y:Float){
+        //倒叙遍历数组
+        for (shape in mShapes.asReversed()){
+            if (shape.containsPoint(x,y)){
+                shape.selectShape()
+            }
+        }
+    }
+
+
     //获取当前正在操作的图形
     private fun currentShape():BaseShape{
         return mShapes.last()

@@ -117,9 +117,12 @@ class TextShape: BaseShape() {
         mTextLines.forEachIndexed { index, line ->
             canvas.drawText(line,rectF.left+mPadding,cy + index*oneLineHeight,mTextPaint)
         }
+
+        //先让父类统一绘制选中时的边框
+        super.draw(canvas)
     }
 
     override fun containsPoint(x: Float, y: Float): Boolean {
-        return true
+        return rectF.contains(x,y)
     }
 }

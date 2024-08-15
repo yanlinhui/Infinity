@@ -15,8 +15,6 @@ import com.baidu.infinity.viewmodel.HomeViewModel
  * 圆形
  */
 class EraserShape: BaseShape() {
-    private val mPath = Path()
-
     //橡皮擦的圆
     private val mEraserCirclePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#806375FE")
@@ -62,9 +60,5 @@ class EraserShape: BaseShape() {
             //在擦除过程中 才需要绘制这个圆
             canvas.drawCircle(mCircleCenterX, mCircleCenterY, mEraserSize / 2f, mEraserCirclePaint)
         }
-    }
-
-    override fun containsPoint(x: Float, y: Float): Boolean {
-        return true
     }
 }

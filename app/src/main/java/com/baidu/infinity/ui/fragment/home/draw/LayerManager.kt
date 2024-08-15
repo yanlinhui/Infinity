@@ -120,6 +120,16 @@ class LayerManager {
         getCurrentLayer()?.updateText(text)
     }
 
+    //填充颜色
+    fun fillColor(x:Float, y:Float){
+        getCurrentLayer()?.fillColor(x,y)
+    }
+
+    //移动时选中图形
+    fun selectShape(x:Float, y:Float){
+        getCurrentLayer()?.selectShape(x,y)
+    }
+
     //通过id找一个图层
     private fun getLayerWidthId(id:Int):Layer?{
         layers.forEach {

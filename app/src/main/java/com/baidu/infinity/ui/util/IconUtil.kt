@@ -23,6 +23,8 @@ fun getDrawToolIconModels(): List<IconModel> {
     return listOf(
         IconModel(OperationType.DRAW_MOVE, R.string.move),
         IconModel(OperationType.DRAW_ERASER, R.string.eraser),
+        IconModel(OperationType.DRAW_BRUSH, R.string.brush),
+        IconModel(OperationType.DRAW_CURVE, R.string.curve),
         IconModel(OperationType.DRAW_LINE_ARROW, R.string.line_arrow),
         IconModel(OperationType.DRAW_CIRCLE, R.string.circle),
         IconModel(OperationType.DRAW_TRIANGLE, R.string.triangle),
@@ -30,8 +32,7 @@ fun getDrawToolIconModels(): List<IconModel> {
         IconModel(OperationType.DRAW_TEXT, R.string.text),
         IconModel(OperationType.DRAW_LINE, R.string.line),
         IconModel(OperationType.DRAW_BEZEL, R.string.bezel),
-        IconModel(OperationType.DRAW_LOCATION, R.string.location),
-        IconModel(OperationType.DRAW_CURVE, R.string.curve)
+        IconModel(OperationType.DRAW_LOCATION, R.string.location)
     )
 }
 

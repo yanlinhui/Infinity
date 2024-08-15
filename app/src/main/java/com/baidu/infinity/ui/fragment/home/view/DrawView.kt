@@ -1,7 +1,11 @@
 package com.baidu.infinity.ui.fragment.home.view
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Canvas
+import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
@@ -9,6 +13,7 @@ import android.view.View
 import com.baidu.infinity.ui.fragment.home.draw.LayerManager
 import com.baidu.infinity.ui.fragment.home.draw.ShapeType
 import com.baidu.infinity.ui.util.OperationType
+import com.baidu.infinity.ui.util.toast
 import com.baidu.infinity.viewmodel.HomeViewModel
 
 class DrawView(
@@ -31,10 +36,56 @@ class DrawView(
     //记录文本的输入状态
     private var mTextState = TextSate.NONE
 
+    //记录接收者对象 （匿名类对象）
+    private val mTextColorChangeReceiver:BroadcastReceiver by lazy {
+        Log.v("pxd2","by lazy")
+        object: BroadcastReceiver(){
+            override fun onReceive(context: Context?, intent: Intent?) {
+                Log.v("pxd","receive...")
+                //刷新文字的颜色
+                refreshTextColor()
+            }
+        }
+
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        //这个视图添加到窗口上时 注册广播
+        //定义广播的类型
+        val intentFilter = IntentFilter(BroadCastCenter.TEXT_COLOR_CHANGE_NAME)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.applicationContext.registerReceiver(
+                mTextColorChangeReceiver,
+                intentFilter,
+                Context.RECEIVER_EXPORTED
+            )
+        }else{
+            context.applicationContext.registerReceiver(
+                mTextColorChangeReceiver,
+                intentFilter
+            )
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        //视图从窗口中分离时，取消注册广播
+        context.unregisterReceiver(mTextColorChangeReceiver)
+    }
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         //创建默认的图层
         layerManager.addLayer(measuredWidth,measuredHeight)
+        Log.v("pxd2","on size changed")
+    }
+
+    //颜色改变时，如果当前时文本，需要刷新界面
+    fun refreshTextColor(){
+        if (mDrawShapeType == ShapeType.Text && mTextState == TextSate.EDITING){
+            invalidate()
+        }
     }
 
     //刷新
@@ -128,7 +179,6 @@ class DrawView(
             OperationType.NONE -> mActionType = ActionType.NONE
             OperationType.DRAW_MENU -> mActionType = ActionType.NONE
             OperationType.DRAW_MOVE -> mActionType = ActionType.MOVE
-            OperationType.DRAW_ERASER -> mActionType = ActionType.ERASER
             else -> {
                 mActionType = ActionType.DRAW
                 when (type) {
@@ -141,6 +191,7 @@ class DrawView(
                     OperationType.DRAW_LINE_ARROW -> mDrawShapeType = ShapeType.Arrow
                     OperationType.DRAW_LOCATION -> mDrawShapeType = ShapeType.Location
                     OperationType.DRAW_TEXT -> mDrawShapeType = ShapeType.Text
+                    OperationType.DRAW_ERASER -> mDrawShapeType = ShapeType.Eraser
                     else -> mDrawShapeType = ShapeType.NONE
                 }
             }

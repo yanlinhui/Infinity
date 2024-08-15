@@ -107,6 +107,8 @@ class TextShape: BaseShape() {
         //绘制边框
         canvas.drawPath(mBorderPath,mBorderPaint)
         //绘制文本
+        //修改颜色
+        mTextPaint.color = HomeViewModel.instance().mColor
         mTextLines.forEachIndexed { index, line ->
             canvas.drawText(line,rectF.left+mPadding,cy + index*oneLineHeight,mTextPaint)
         }

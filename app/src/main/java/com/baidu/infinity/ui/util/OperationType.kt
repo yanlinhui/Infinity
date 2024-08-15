@@ -18,6 +18,7 @@ enum class OperationType {
     DRAW_BEZEL,
     DRAW_LOCATION,
     DRAW_CURVE,
+    DRAW_BRUSH,
 
     MENU_WORKS,
     MENU_MUSIC,

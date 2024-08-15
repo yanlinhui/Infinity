@@ -1,5 +1,7 @@
 package com.baidu.infinity.ui.fragment.home.colorpicker
 
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.baidu.infinity.R
 import com.baidu.infinity.databinding.ColorItemAddLayoutBinding
 import com.baidu.infinity.databinding.ColorItemLayoutBinding
+import com.baidu.infinity.ui.fragment.home.view.BroadCastCenter
 import com.baidu.infinity.viewmodel.HomeViewModel
 
 class ColorAdapter: RecyclerView.Adapter<ColorAdapter.MyViewHolder>() {
@@ -24,7 +27,11 @@ class ColorAdapter: RecyclerView.Adapter<ColorAdapter.MyViewHolder>() {
                 when (type){
                     TYPE_ADD -> actionListener(ItemAction.ADD)
                     TYPE_DELETE -> actionListener(ItemAction.DELETE)
-                    TYPE_NORMAL -> HomeViewModel.instance().mColor = color
+                    TYPE_NORMAL -> {
+                        HomeViewModel.instance().mColor = color
+                        //发送颜色改变的广播
+                        itemView.context.applicationContext.sendBroadcast(Intent(BroadCastCenter.TEXT_COLOR_CHANGE_NAME))
+                    }
                 }
             }
         }

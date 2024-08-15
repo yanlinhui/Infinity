@@ -147,7 +147,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         mHSVColorPickerView = colorPickerBinding.root
         mHSVColorPickerView.pickColorCallback = { color ->
             HomeViewModel.instance().mColor = color
+            mBinding.drawView.refreshTextColor()
         }
+
         PopupWindow(requireContext()).apply {
             contentView = colorPickerBinding.root
             width = LayoutParams.WRAP_CONTENT

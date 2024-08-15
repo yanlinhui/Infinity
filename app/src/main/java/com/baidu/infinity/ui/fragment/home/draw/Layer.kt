@@ -6,6 +6,7 @@ import android.graphics.Color
 import com.baidu.infinity.ui.fragment.home.draw.shapes.ArrowLineShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.BezelShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.CircleShape
+import com.baidu.infinity.ui.fragment.home.draw.shapes.EraserShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.FreeCurveShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.LineShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.LocationShape
@@ -63,6 +64,9 @@ class Layer(val id: Int,val width:Int, val height:Int) {
             }
             ShapeType.Text ->{ //绘制文本
                 TextShape()
+            }
+            ShapeType.Eraser -> { //橡皮擦
+                EraserShape()
             }
             else -> {null}
         }

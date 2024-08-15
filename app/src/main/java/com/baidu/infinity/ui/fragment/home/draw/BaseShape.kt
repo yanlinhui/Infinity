@@ -3,6 +3,7 @@ package com.baidu.infinity.ui.fragment.home.draw
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
+import com.baidu.infinity.ui.fragment.home.view.ShapeState
 import com.baidu.infinity.ui.util.dp2pxF
 import com.baidu.infinity.viewmodel.HomeViewModel
 
@@ -19,6 +20,7 @@ abstract class BaseShape {
     protected var startY:Float = 0f
     protected var endX:Float = 0f
     protected var endY:Float = 0f
+    protected var mShapeState = ShapeState.NORMAL //记录图形状态
 
     //中心点
     var centerX:Float = 0f
@@ -32,6 +34,11 @@ abstract class BaseShape {
         style = HomeViewModel.instance().mStrokeStyle
         strokeJoin = Paint.Join.ROUND
         strokeCap = Paint.Cap.ROUND
+    }
+
+    //设置当前图形所处的状态
+    fun updateShapeState(state: ShapeState){
+        mShapeState = state
     }
 
     //设置图形起始坐标

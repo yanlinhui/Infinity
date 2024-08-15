@@ -3,6 +3,7 @@ package com.baidu.infinity.ui.fragment.home.draw
 import android.graphics.Bitmap
 import androidx.room.util.foreignKeyCheck
 import com.baidu.infinity.ui.fragment.home.layer.LayerModelManager
+import com.baidu.infinity.ui.fragment.home.view.ShapeState
 
 class LayerManager {
     //保存所有的图层
@@ -107,6 +108,11 @@ class LayerManager {
     //清空图层
     fun clearLayer(){
         getCurrentLayer()?.clear()
+    }
+
+    //修改正在绘制图形的状态
+    fun updateShapeState(state: ShapeState){
+        getCurrentLayer()?.updateShapeState(state)
     }
 
     //修改绘制的文本

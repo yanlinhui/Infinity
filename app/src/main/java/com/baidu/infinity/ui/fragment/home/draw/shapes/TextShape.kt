@@ -8,6 +8,7 @@ import android.util.Log
 import android.util.TypedValue
 import com.baidu.infinity.R
 import com.baidu.infinity.ui.fragment.home.draw.BaseShape
+import com.baidu.infinity.ui.fragment.home.view.ShapeState
 import com.baidu.infinity.ui.util.dp2pxF
 import com.baidu.infinity.viewmodel.HomeViewModel
 
@@ -99,13 +100,17 @@ class TextShape: BaseShape() {
     //更新文本
     fun updateText(text: String){
         mText = text
-        //文本确定的时候 内容的宽度和高度确定了
+
+        //内容的宽度和高度确定了
         changeBorderSize()
     }
 
     override fun draw(canvas: Canvas) {
         //绘制边框
-        canvas.drawPath(mBorderPath,mBorderPaint)
+        if (mShapeState == ShapeState.DRAWING) {
+            //在编辑过程中才需要绘制边框
+            canvas.drawPath(mBorderPath, mBorderPaint)
+        }
         //绘制文本
         //修改颜色
         mTextPaint.color = HomeViewModel.instance().mColor

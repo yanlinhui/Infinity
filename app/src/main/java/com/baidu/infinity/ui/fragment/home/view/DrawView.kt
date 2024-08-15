@@ -38,10 +38,8 @@ class DrawView(
 
     //记录接收者对象 （匿名类对象）
     private val mTextColorChangeReceiver:BroadcastReceiver by lazy {
-        Log.v("pxd2","by lazy")
         object: BroadcastReceiver(){
             override fun onReceive(context: Context?, intent: Intent?) {
-                Log.v("pxd","receive...")
                 //刷新文字的颜色
                 refreshTextColor()
             }
@@ -78,7 +76,6 @@ class DrawView(
         super.onSizeChanged(w, h, oldw, oldh)
         //创建默认的图层
         layerManager.addLayer(measuredWidth,measuredHeight)
-        Log.v("pxd2","on size changed")
     }
 
     //颜色改变时，如果当前时文本，需要刷新界面
@@ -111,23 +108,33 @@ class DrawView(
                 //确定在做什么操作1.颜色填充 2.橡皮擦 3.移动 4.双指缩放 5.绘图
                 when (mActionType){
                     ActionType.DRAW -> {
-                        layerManager.addShape(mDrawShapeType,event.x, event.y)
-                        //如果是文本就弹出键盘
-                        if (mDrawShapeType == ShapeType.Text){
-                            //判断当前文本的状态
-                            if (mTextState == TextSate.NONE){
-                                //现在需要绘制文本
-                                //弹出键盘
-                                addShowKeyboardListener(true)
-                                //进入文本的编辑状态
-                                mTextState = TextSate.EDITING
-                            }else{
-                                //编辑完毕
-                                //退出编辑状态
-                                //隐藏键盘
-                                addShowKeyboardListener(false)
-                                //退出编辑状态
-                                mTextState = TextSate.NONE
+                        if (mDrawShapeType == ShapeType.Text && mTextState == TextSate.EDITING){
+                            //取消文字的编辑
+                            //编辑完毕
+                            //退出编辑状态
+                            //隐藏键盘
+                            addShowKeyboardListener(false)
+                            //退出编辑状态
+                            mTextState = TextSate.NONE
+                            //修改文字图形的状态
+                            layerManager.updateShapeState(ShapeState.NORMAL)
+                            invalidate()
+                        }else {
+                            layerManager.addShape(mDrawShapeType, event.x, event.y)
+                            //修改图形所处的状态
+                            //确保这个图形已经添加了
+                            layerManager.updateShapeState(ShapeState.DRAWING)
+
+                            //如果是文本就弹出键盘
+                            if (mDrawShapeType == ShapeType.Text) {
+                                //判断当前文本的状态
+                                if (mTextState == TextSate.NONE) {
+                                    //现在需要绘制文本
+                                    //弹出键盘
+                                    addShowKeyboardListener(true)
+                                    //进入文本的编辑状态
+                                    mTextState = TextSate.EDITING
+                                }
                             }
                         }
                     }
@@ -151,6 +158,12 @@ class DrawView(
             MotionEvent.ACTION_UP ->{
                 //当前绘制完毕，提醒外部刷新layer的数据
                 refreshLayerListener()
+                //修改当前图形的编辑状态为正常
+                //文字的状态不在这里修改，除了文字都需要在这里修改状态
+                if (mDrawShapeType != ShapeType.Text) {
+                    layerManager.updateShapeState(ShapeState.NORMAL)
+                    invalidate()
+                }
             }
         }
         return true

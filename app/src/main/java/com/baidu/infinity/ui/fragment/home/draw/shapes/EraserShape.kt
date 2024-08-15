@@ -7,6 +7,7 @@ import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import com.baidu.infinity.ui.fragment.home.draw.BaseShape
+import com.baidu.infinity.ui.fragment.home.view.ShapeState
 import com.baidu.infinity.ui.util.dp2pxF
 import com.baidu.infinity.viewmodel.HomeViewModel
 
@@ -57,7 +58,10 @@ class EraserShape: BaseShape() {
         canvas.drawPath(mPath,mPaint)
 
         //绘制橡皮擦的圆
-        canvas.drawCircle(mCircleCenterX,mCircleCenterY, mEraserSize/2f, mEraserCirclePaint)
+        if (mShapeState == ShapeState.DRAWING) {
+            //在擦除过程中 才需要绘制这个圆
+            canvas.drawCircle(mCircleCenterX, mCircleCenterY, mEraserSize / 2f, mEraserCirclePaint)
+        }
     }
 
     override fun containsPoint(x: Float, y: Float): Boolean {

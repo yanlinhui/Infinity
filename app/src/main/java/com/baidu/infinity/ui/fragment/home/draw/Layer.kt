@@ -13,6 +13,7 @@ import com.baidu.infinity.ui.fragment.home.draw.shapes.LocationShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.RectangleShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.TextShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.TriangleShape
+import com.baidu.infinity.ui.fragment.home.view.ShapeState
 
 /**
  * 管理图层
@@ -79,6 +80,11 @@ class Layer(val id: Int,val width:Int, val height:Int) {
         }
 
     }
+    //修改正在绘制图形的状态
+    fun updateShapeState(state: ShapeState){
+        currentShape().updateShapeState(state)
+    }
+
     //设置当前移动过程中的触摸点
     fun addEndPoint(endX: Float, endY: Float){
         currentShape().setEndPoint(endX,endY)
@@ -108,7 +114,7 @@ class Layer(val id: Int,val width:Int, val height:Int) {
     //跟新内容
     fun updateText(text: String){
         //拿到绘制文本的shape
-        val textShape = mShapes.last() as TextShape
+        val textShape = currentShape() as TextShape
         textShape.updateText(text)
     }
 

@@ -5,6 +5,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import com.baidu.infinity.ui.fragment.home.draw.ArrowPath
 import com.baidu.infinity.ui.fragment.home.draw.BaseShape
+import com.baidu.infinity.ui.fragment.home.view.ShapeState
 import com.baidu.infinity.ui.util.dp2pxF
 import com.baidu.infinity.viewmodel.HomeViewModel
 
@@ -30,9 +31,24 @@ class ArrowLineShape: BaseShape() {
     }
 
     override fun draw(canvas: Canvas) {
-        //绘制椭圆
-        canvas.drawPath(mPath,mPaint)
+        if (mShapeState == ShapeState.SELECT) {
+            //在起点画一个矩形
+            canvas.drawBitmap(
+                mCornerBitmap,
+                startX - mCornerSize,
+                startY - mCornerSize,
+                null
+            )
+            //在终点画一个矩形
+            canvas.drawBitmap(
+                mCornerBitmap,
+                endX - mCornerSize,
+                endY - mCornerSize,
+                null
+            )
+        }
 
+        canvas.drawPath(mPath,mPaint)
     }
 
 

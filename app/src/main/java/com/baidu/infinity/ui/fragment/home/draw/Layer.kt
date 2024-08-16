@@ -1,8 +1,13 @@
 package com.baidu.infinity.ui.fragment.home.draw
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.os.Build
 import com.baidu.infinity.ui.fragment.home.draw.shapes.ArrowLineShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.BezelShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.CircleShape
@@ -13,7 +18,9 @@ import com.baidu.infinity.ui.fragment.home.draw.shapes.LocationShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.RectangleShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.TextShape
 import com.baidu.infinity.ui.fragment.home.draw.shapes.TriangleShape
+import com.baidu.infinity.ui.fragment.home.view.BroadCastCenter
 import com.baidu.infinity.ui.fragment.home.view.ShapeState
+import com.baidu.infinity.viewmodel.HomeViewModel
 
 /**
  * 管理图层
@@ -25,9 +32,39 @@ class Layer(val id: Int,val width:Int, val height:Int) {
     private var mBitmap: Bitmap = Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888)
     //记录当前这一层绘制的所有形状
     private val mShapes: ArrayList<BaseShape> = arrayListOf()
+    //记录当前选中正在编辑的图形对象
+    private var mLastSelectedShape: BaseShape? = null
+
+    private val mIconClickReceiver: BroadcastReceiver by lazy {
+        object : BroadcastReceiver(){
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (mLastSelectedShape != null){
+                    mLastSelectedShape?.unSelect()
+                    mLastSelectedShape = null
+                }
+            }
+        }
+    }
 
     init {
         mCanvas = Canvas(mBitmap)
+
+        val intentFilter = IntentFilter(BroadCastCenter.ICON_CLICK_BROADCAST_NAME)
+        //注册广播
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            HomeViewModel.instance()
+                .getContext()
+                .registerReceiver(mIconClickReceiver,intentFilter, Context.RECEIVER_EXPORTED)
+        }else{
+            HomeViewModel.instance()
+                .getContext()
+                .registerReceiver(mIconClickReceiver,intentFilter)
+        }
+    }
+
+    fun onDestroy(){
+        //取消注册
+        HomeViewModel.instance().getContext().unregisterReceiver(mIconClickReceiver)
     }
 
     //获取当前图层的bitmap对象
@@ -122,7 +159,7 @@ class Layer(val id: Int,val width:Int, val height:Int) {
     fun fillColor(x:Float, y:Float){
         //倒叙遍历数组
         for (shape in mShapes.asReversed()){
-            if (shape.containsPoint(x,y)){
+            if (shape.containsPointInPath(x,y)){
                 shape.fillColor()
             }
         }
@@ -130,12 +167,49 @@ class Layer(val id: Int,val width:Int, val height:Int) {
 
     //移动时选中图形
     fun selectShape(x:Float, y:Float){
-        //倒叙遍历数组
-        for (shape in mShapes.asReversed()){
-            if (shape.containsPoint(x,y)){
-                shape.selectShape()
+        //获取触摸点对应的图形
+        val selectedShape = findSelectedShape(x,y)
+        if (selectedShape == null){
+            //点击在空白区域
+            if (mLastSelectedShape != null){
+                //之前选中某个图形，现在需要取消选中
+                mLastSelectedShape?.unSelect()
+                //修改值
+                mLastSelectedShape = null
+            }
+        }else{
+            //点击在某个图形中
+            //判断之前是否有选中的图形
+            if (mLastSelectedShape == null){
+                //选中当前这个图形  第一次选中
+                selectedShape.select()
+                mLastSelectedShape = selectedShape
+            }else{
+                //判断是不是同一个图形 同一个不做任何事情
+                if (mLastSelectedShape != selectedShape){
+                    //取消之前的
+                    mLastSelectedShape?.unSelect()
+                    //选中现在的
+                    selectedShape.select()
+                    mLastSelectedShape = selectedShape
+                }else{
+                    //第二次选中
+                    selectedShape.calculateMovePosition(x,y)
+                }
             }
         }
+    }
+
+    //获取触摸点在当前图层里面的哪个Shape中
+    private fun findSelectedShape(x:Float, y:Float):BaseShape?{
+        //倒叙遍历数组
+        for (shape in mShapes.asReversed()){
+            if (shape.containsPointInRect(x,y)){
+                return shape
+            }
+        }
+        //没有点击在某个图形中 点击在空白区域
+        return null
     }
 
 

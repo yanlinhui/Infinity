@@ -122,7 +122,7 @@ class TextShape: BaseShape() {
         super.draw(canvas)
     }
 
-    override fun containsPoint(x: Float, y: Float): Boolean {
+    override fun containsPointInPath(x: Float, y: Float): Boolean {
         return rectF.contains(x,y)
     }
 }

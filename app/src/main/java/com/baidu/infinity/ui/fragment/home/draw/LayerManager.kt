@@ -24,6 +24,7 @@ class LayerManager {
     fun removeLayer(id: Int): Boolean{
         layers.forEach {
             if (it.id == id){
+                it.onDestroy()
                 layers.remove(it)
                 //修改模型数据
                 //LayerModelManager.instance.removeLayer(id)
@@ -31,20 +32,6 @@ class LayerManager {
             }
         }
         return false
-    }
-
-    //删除最上层图层
-    fun removeFirstLayer(): Boolean{
-        if (layers.isNotEmpty()){
-            layers.removeLast()
-            return true
-        }
-        return false
-    }
-
-    //删除所有图层
-    fun removeLayers(){
-        layers.clear()
     }
 
     //图层交换
@@ -139,6 +126,4 @@ class LayerManager {
         }
         return null
     }
-
-
 }

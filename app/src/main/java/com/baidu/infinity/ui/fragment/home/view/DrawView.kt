@@ -152,7 +152,7 @@ class DrawView(
             }
             MotionEvent.ACTION_MOVE ->{
                 when (mActionType){
-                    ActionType.DRAW -> {
+                    ActionType.DRAW,ActionType.MOVE -> {
                         layerManager.addEndPoint(event.x, event.y)
                         invalidate()
                     }

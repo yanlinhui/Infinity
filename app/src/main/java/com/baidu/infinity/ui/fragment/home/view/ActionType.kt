@@ -8,5 +8,4 @@ enum class ActionType {
     FILL, //填充颜色
     MOVE, //移动图形
     DRAW, //绘制图形
-    ERASER //橡皮擦
 }

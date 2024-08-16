@@ -2,6 +2,7 @@ package com.baidu.infinity.ui.fragment.home
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -27,6 +28,7 @@ import com.baidu.infinity.ui.fragment.home.draw.LayerManager
 import com.baidu.infinity.ui.fragment.home.layer.LayerModel
 import com.baidu.infinity.ui.fragment.home.layer.LayerModelManager
 import com.baidu.infinity.ui.fragment.home.layer.LayerState
+import com.baidu.infinity.ui.fragment.home.view.BroadCastCenter
 import com.baidu.infinity.ui.fragment.home.view.HSVColorPickerView
 import com.baidu.infinity.ui.util.IconState
 import com.baidu.infinity.ui.util.OperationType
@@ -198,6 +200,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         mBinding.mainMenuView.setIcons(getHomeMenuIconModels())
         //监听工具点击事件
         mBinding.iconMenuView.iconClickListener = { type,state ->
+            //发送按钮点击的广播 取消选中状态
+            sendUnselectShapeBroadCast()
+
             if (state == IconState.NORMAL) {
                 mBinding.drawView.setCurrentDrawType(OperationType.NONE)
             }else{
@@ -206,6 +211,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         }
         //绘制工具栏的menu按钮被点击
         mBinding.menuIconView.clickCallback = {
+            //发送按钮点击的广播 取消选中状态
+            sendUnselectShapeBroadCast()
+
             //如果有正在做动画 就不响应
             //if (drawMenuCloseAnim.isRunning || drawMenuOpenAnim.isRunning) return@setOnClickListener
             if (isDrawMenuOpen){
@@ -227,6 +235,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         }
         //主菜单arrow箭头点击
         mBinding.arrowImageView.setOnClickListener {
+            //发送按钮点击的广播 取消选中状态
+            sendUnselectShapeBroadCast()
+
             if (isArrowRightOpen){ //关闭动画
                 arrowLeftAnim.start()
                 mainMenuCloseAnim.start()
@@ -242,6 +253,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         }
         //配置actionMenu回调事件
         mBinding.actionMenuView.iconClickListener = { type,state ->
+            //发送按钮点击的广播 取消选中状态
+            sendUnselectShapeBroadCast()
+
             when (type) {
                 OperationType.OPERATION_PALETTE -> {
                     //颜色选择器
@@ -284,6 +298,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         }
         //监听主菜单的事件
         mBinding.mainMenuView.iconClickListener = { type, state ->
+            //发送按钮点击的广播 取消选中状态
+            sendUnselectShapeBroadCast()
+
             when (type) {
                 OperationType.MENU_LAYER ->{
                     //图层
@@ -304,7 +321,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         //监听输入框的内容改变的事件
         mBinding.edInput.addTextChangedListener(afterTextChanged = {
             //将现有的文本拿给DrawView显示
-            Log.v("pxd",it.toString())
             mBinding.drawView.refreshText(it.toString())
         })
         //监听drawView上要绘制文本的事件
@@ -435,5 +451,13 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         )
     }
 
+    //发送广播 通知取消选中
+    private fun sendUnselectShapeBroadCast(){
+        //发送按钮点击的广播 取消选中状态
+        requireActivity().sendBroadcast(Intent(BroadCastCenter.ICON_CLICK_BROADCAST_NAME))
+        delayTask(200){
+            mBinding.drawView.refresh()
+        }
+    }
 }
 

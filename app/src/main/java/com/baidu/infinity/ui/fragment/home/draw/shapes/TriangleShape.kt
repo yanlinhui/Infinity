@@ -17,12 +17,19 @@ class TriangleShape: BaseShape() {
 
     override fun setEndPoint(x: Float, y: Float) {
         super.setEndPoint(x, y)
-        //清空路径 重新绘制
-        mPath.reset()
-        //设置三角形的起点
-        mPath.moveTo(startX,endY)
-        mPath.lineTo(x,y)
-        mPath.lineTo((startX+x)/2f,startY)
+
+        if (mMovePosition == MovePosition.CENTER){
+            //让path跟着移动
+            mPath.offset(mMoveDx,mMoveDy)
+        }else {
+            //清空路径 重新绘制
+            mPath.reset()
+            //设置三角形的起点
+            mPath.moveTo(rectF.left, rectF.bottom)
+            mPath.lineTo(rectF.right, rectF.bottom)
+            mPath.lineTo((rectF.left + rectF.right)/2, rectF.top)
+            mPath.close()
+        }
     }
 
     override fun fillColor() {

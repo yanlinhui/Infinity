@@ -1,6 +1,7 @@
 package com.baidu.infinity.ui.fragment.home.draw.shapes
 
 import android.graphics.Canvas
+import android.graphics.RectF
 import android.util.Log
 import com.baidu.infinity.ui.fragment.home.draw.BaseShape
 import com.baidu.infinity.ui.fragment.home.view.ShapeState
@@ -54,6 +55,7 @@ class LineShape: BaseShape() {
         //矩形区域就确定了 适配左到右 右到左 上到下  下到上 拉动图形
         when (mMovePosition) {
             MovePosition.NONE -> { //正常绘制
+                if (mIsInMoveMode) return
                 endX = x
                 endY = y
                 rectF.left = Math.min(startX, endX)
@@ -123,7 +125,17 @@ class LineShape: BaseShape() {
         canvas.drawPath(mPath,mPaint)
     }
 
+    //填充
     override fun containsPointInPath(x: Float, y: Float): Boolean {
+        val tolerance = mPaint.strokeWidth
+        val d1 = distance(startX, startY, x, y)
+        val d2 = distance(endX, endY, x, y)
+        val lineLen = distance(startX, startY, endX, endY)
+        return Math.abs(d1 + d2 - lineLen) <= tolerance
+    }
+
+    //判断触摸点是否在矩形区域内部
+    override fun containsPointInRect(x: Float, y: Float):Boolean{
         val tolerance = mPaint.strokeWidth
         val d1 = distance(startX, startY, x, y)
         val d2 = distance(endX, endY, x, y)

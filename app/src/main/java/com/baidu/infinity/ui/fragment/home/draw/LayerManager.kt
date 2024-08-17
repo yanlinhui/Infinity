@@ -117,6 +117,11 @@ class LayerManager {
         getCurrentLayer()?.selectShape(x,y)
     }
 
+    //修改模式
+    fun updateMoveMode(isInMoveMode: Boolean){
+        getCurrentLayer()?.updateMoveMode(isInMoveMode)
+    }
+
     //通过id找一个图层
     private fun getLayerWidthId(id:Int):Layer?{
         layers.forEach {

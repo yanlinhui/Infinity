@@ -42,7 +42,16 @@ class EraserShape: BaseShape() {
     }
 
     override fun setEndPoint(x: Float, y: Float) {
-        super.setEndPoint(x, y)
+        //判断是不是在Move模式
+        if (mIsInMoveMode) return
+
+        endX = x
+        endY = y
+        rectF.left = Math.min(startX, endX)
+        rectF.top = Math.min(startY, endY)
+        rectF.right = Math.max(startX, endX)
+        rectF.bottom = Math.max(startY, endY)
+
         //从上一个点到当前点联接一条线
         mPath.lineTo(x,y)
 

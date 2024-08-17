@@ -203,6 +203,12 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
             //发送按钮点击的广播 取消选中状态
             sendUnselectShapeBroadCast()
 
+            if (type == OperationType.DRAW_MOVE){
+                //更新move模式
+                HomeViewModel.instance()
+                    .mLayerManager
+                    .updateMoveMode(state == IconState.SELECTED)
+            }
             if (state == IconState.NORMAL) {
                 mBinding.drawView.setCurrentDrawType(OperationType.NONE)
             }else{

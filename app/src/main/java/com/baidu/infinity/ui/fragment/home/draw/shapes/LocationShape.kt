@@ -26,20 +26,39 @@ class LocationShape: BaseShape() {
         super.setEndPoint(x, y)
         mPath.reset()
         //绘制箭头
+        //x轴
+//        ArrowPath.addArrowToPath(
+//            mPath,
+//            Math.min(startX,endX),
+//            (startY + endY)/2,
+//            Math.max(startX,endX),
+//            (startY + endY)/2,
+//            mArrowLength
+//        )
+//        //y轴
+//        ArrowPath.addArrowToPath(
+//            mPath,
+//            (startX + endX)/2,
+//            Math.max(startY, endY),
+//            (startX + endX)/2,
+//            Math.min(startY, endY),
+//            mArrowLength
+//        )
         ArrowPath.addArrowToPath(
             mPath,
-            Math.min(startX,endX),
-            (startY + endY)/2,
-            Math.max(startX,endX),
-            (startY + endY)/2,
+            rectF.left,
+            (rectF.top+rectF.bottom)/2,
+            rectF.right,
+            (rectF.top+rectF.bottom)/2,
             mArrowLength
         )
+        //y轴
         ArrowPath.addArrowToPath(
             mPath,
-            (startX + endX)/2,
-            Math.max(startY, endY),
-            (startX + endX)/2,
-            Math.min(startY, endY),
+            (rectF.left + rectF.right)/2,
+            rectF.bottom,
+            (rectF.left + rectF.right)/2,
+            rectF.top,
             mArrowLength
         )
     }

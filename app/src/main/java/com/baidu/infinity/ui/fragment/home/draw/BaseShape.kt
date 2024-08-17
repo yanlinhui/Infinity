@@ -12,13 +12,9 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.Region
-import android.os.Build
-import android.util.Log
 import com.baidu.infinity.R
-import com.baidu.infinity.ui.fragment.home.view.BroadCastCenter
 import com.baidu.infinity.ui.fragment.home.view.ShapeState
 import com.baidu.infinity.ui.util.dp2pxF
-import com.baidu.infinity.ui.util.toast
 import com.baidu.infinity.viewmodel.HomeViewModel
 
 /**
@@ -35,7 +31,7 @@ abstract class BaseShape {
     protected var endX:Float = 0f
     protected var endY:Float = 0f
     protected var mShapeState = ShapeState.NORMAL //记录图形状态
-
+    protected var mIsInMoveMode = false //记录move图标是不是被点击了
     //绘制图形的path
     protected val mPath = Path()
     //中心点
@@ -144,6 +140,11 @@ abstract class BaseShape {
         mShapeState = state
     }
 
+    //修改是否进入Move模式
+    fun updateMoveMode(isInMoveMode: Boolean){
+        mIsInMoveMode = isInMoveMode
+    }
+
     //设置图形起始坐标
     open fun setStartPoint(x:Float,y:Float){
         startX = x
@@ -159,6 +160,9 @@ abstract class BaseShape {
         //矩形区域就确定了 适配左到右 右到左 上到下  下到上 拉动图形
         when (mMovePosition){
             MovePosition.NONE -> { //正常绘制
+                //判断是不是在Move模式
+                if (mIsInMoveMode) return
+
                 endX = x
                 endY = y
                 rectF.left = Math.min(startX, endX)
@@ -292,6 +296,7 @@ abstract class BaseShape {
     }
 
     //判断触摸点是否在当前这个图形的Path内部
+    //填充颜色时使用
     open fun containsPointInPath(x:Float, y:Float):Boolean{
         //路径对应的区域
         val pathRegion = Region()

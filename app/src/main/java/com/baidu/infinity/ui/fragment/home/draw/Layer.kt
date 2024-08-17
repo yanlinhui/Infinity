@@ -165,6 +165,13 @@ class Layer(val id: Int,val width:Int, val height:Int) {
         }
     }
 
+    //修改模式
+    fun updateMoveMode(isInMoveMode: Boolean){
+        mShapes.forEach { shape ->
+            shape.updateMoveMode(isInMoveMode)
+        }
+    }
+
     //移动时选中图形
     fun selectShape(x:Float, y:Float){
         //获取触摸点对应的图形
@@ -215,8 +222,10 @@ class Layer(val id: Int,val width:Int, val height:Int) {
 
     //获取当前正在操作的图形
     private fun currentShape():BaseShape{
+        //先判断是不是有当前选中的
+        if (mLastSelectedShape != null) return mLastSelectedShape!!
+
         return mShapes.last()
     }
-
 
 }

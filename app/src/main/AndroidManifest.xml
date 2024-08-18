@@ -21,6 +21,21 @@
             </intent-filter>
         </activity>
 
+        <!--
+            ContentProvider中最重要的就是内容的uri
+            协议：content://
+            授权码： authority 公认形式：包名.provider
+            表/内容：
+        -->
+        <provider
+            android:authorities="com.baidu.infinity.provider"
+            android:name="androidx.core.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path"/>
+        </provider>
     </application>
 
 </manifest>

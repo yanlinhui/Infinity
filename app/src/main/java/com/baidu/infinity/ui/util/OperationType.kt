@@ -20,7 +20,7 @@ enum class OperationType {
     DRAW_CURVE,
     DRAW_BRUSH,
 
-    MENU_WORKS,
+    MENU_SAVE,
     MENU_DOWNLOAD,
     MENU_SHARE,
     MENU_PICTURE,

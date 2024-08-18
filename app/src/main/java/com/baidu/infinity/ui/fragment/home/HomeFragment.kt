@@ -17,6 +17,7 @@ import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager.LayoutParams
 import android.widget.PopupWindow
+import androidx.core.content.FileProvider
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
@@ -62,6 +63,9 @@ import com.drake.brv.utils.setup
 import com.skydoves.colorpickerview.ColorPickerDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.BufferedOutputStream
+import java.io.File
+import java.io.FileOutputStream
 
 class HomeFragment: BaseFragment<FragmentHomeBinding>() {
     private val closeBottom: Int by lazy {
@@ -379,6 +383,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
                         mBinding.mainMenuView.resetIconState()
                     }
                 }
+                OperationType.MENU_SHARE ->{
+                    shareImage()
+                }
                 else -> {}
             }
         }
@@ -409,6 +416,45 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         }
     }
 
+    //将图片保存到共享目录
+    private fun saveImageToExternalPath(file:File, bitmap: Bitmap){
+        FileOutputStream(file).use { fos ->
+            BufferedOutputStream(fos).use { bos ->
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,bos)
+            }
+        }
+    }
+
+    //分享图片
+    private fun shareImage() {
+        lifecycleScope.launch {
+            //将DrawView视图转化为图片
+            mBinding.drawView.getBitmap().collect{ bitmap ->
+                //获取共享文件路径
+                val externalDir = requireContext().getExternalFilesDir(null)
+                //在根目录下创建共享的文件
+                val file = File(externalDir,"infinity.jpg")
+                //将图片保存到共享位置
+                saveImageToExternalPath(file,bitmap)
+                //获取共享文件对应的contenturi
+                val uri = FileProvider.getUriForFile(
+                    requireContext(),
+                    "com.baidu.infinity.provider",
+                    file
+                )
+                //配置意图 打开所有应用里面能够接受action的界面
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "image/jpeg"
+                intent.putExtra(Intent.EXTRA_STREAM,uri)
+
+                //发起分享动作
+                //弹出可以接受图片分享的所有应用供我选择
+                requireContext().startActivity(Intent.createChooser(intent,"分享图片"))
+            }
+        }
+    }
+
+    //将图片保存到相册
     private fun saveDrawViewToAlbum() {
         //将DrawView上所有的背景Bitmap和图层Bitmap绘制到一个同意的Bitmap中
         //insert into userTable age=30
@@ -589,4 +635,24 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

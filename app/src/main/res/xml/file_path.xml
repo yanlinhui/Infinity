@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+    name: 共享的文件的名字
+    path: 文件在共享目录下的路径
+          . 表示根目录下面
+          Pictures/ 表示在根目录下有一个Pictures目录，共享文件在这个目录下
+    -->
+    <external-files-path
+        name="infinity"
+        path="."/>
+</paths>

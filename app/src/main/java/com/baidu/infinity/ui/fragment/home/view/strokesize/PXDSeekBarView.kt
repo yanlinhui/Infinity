@@ -153,9 +153,21 @@ class PXDSeekBarView(
         canvas.drawRoundRect(mProgressRect,mProgressBarWidth/2,mProgressBarWidth/2,mPaint)
         //绘制圆
         if (mOrientation == Orientation.VERTICAL){
-            mCy = mProgressRect.bottom
+            if (mProgressRect.bottom <= mDotSize/2){
+                mCy = mDotSize/2
+            }else if (mProgressRect.bottom >= height - mDotSize/2){
+                mCy = height - mDotSize/2
+            }else{
+                mCy = mProgressRect.bottom
+            }
         }else{
-            mCx = mProgressRect.right
+            if (mProgressRect.right <= mDotSize/2){
+                mCx = mDotSize/2
+            }else if (mProgressRect.right >= width - mDotSize/2){
+                mCx = width - mDotSize/2
+            }else{
+                mCx = mProgressRect.right
+            }
         }
         mPaint.color = mDotColor
         canvas.drawCircle(mCx,mCy,mDotSize/2f,mPaint)

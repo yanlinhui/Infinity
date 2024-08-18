@@ -25,7 +25,7 @@ class HomeViewModel(application: Application): AndroidViewModel(application) {
     //画笔颜色
     var mColor = Color.BLACK
     //填充方式
-    var mStrokeStyle = Paint.Style.FILL_AND_STROKE
+    var mStrokeStyle = Paint.Style.STROKE
     //文字大小
     var mTextSize = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_SP,

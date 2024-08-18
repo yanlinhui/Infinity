@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="74dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/manu_corner_round_shape">
+
+    <TextView
+        android:id="@+id/tvSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_margin="20dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <com.baidu.infinity.ui.fragment.home.view.strokesize.PXDSeekBarView
+        android:id="@+id/barView"
+        android:layout_width="26dp"
+        android:layout_height="164dp"
+        android:layout_marginTop="10dp"
+        app:min="1"
+        app:max="50"
+        app:progress="1"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSize"/>
+    
+    <View
+        android:id="@+id/indicatorView"
+        android:layout_width="50dp"
+        android:layout_height="28dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/indicator_corner_round_shape"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barView"/>
+
+    <ImageView
+        android:id="@+id/ivDotEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/indicatorView"
+        app:layout_constraintEnd_toEndOf="@+id/indicatorView"
+        app:layout_constraintStart_toStartOf="@+id/indicatorView"
+        app:layout_constraintTop_toTopOf="@+id/indicatorView"
+        app:srcCompat="@drawable/dot_empty" />
+
+    <ImageView
+        android:id="@+id/ivDotFill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="37dp"
+        app:layout_constraintEnd_toEndOf="@+id/indicatorView"
+        app:layout_constraintStart_toStartOf="@+id/indicatorView"
+        app:layout_constraintTop_toBottomOf="@+id/indicatorView"
+        app:srcCompat="@drawable/dot_fill"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

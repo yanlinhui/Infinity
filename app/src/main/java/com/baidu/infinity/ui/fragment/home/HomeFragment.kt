@@ -22,6 +22,7 @@ import com.baidu.infinity.databinding.ColorPickerLayoutBinding
 import com.baidu.infinity.databinding.FragmentHomeBinding
 import com.baidu.infinity.databinding.LayerItemLayoutBinding
 import com.baidu.infinity.databinding.LayerPopupViewLayoutBinding
+import com.baidu.infinity.databinding.StrokeBarVewLayoutBinding
 import com.baidu.infinity.model.IconModel
 import com.baidu.infinity.ui.base.BaseFragment
 import com.baidu.infinity.ui.fragment.home.draw.LayerManager
@@ -30,6 +31,7 @@ import com.baidu.infinity.ui.fragment.home.layer.LayerModelManager
 import com.baidu.infinity.ui.fragment.home.layer.LayerState
 import com.baidu.infinity.ui.fragment.home.view.BroadCastCenter
 import com.baidu.infinity.ui.fragment.home.view.HSVColorPickerView
+import com.baidu.infinity.ui.fragment.home.view.strokesize.StrokeBarView
 import com.baidu.infinity.ui.util.IconState
 import com.baidu.infinity.ui.util.OperationType
 import com.baidu.infinity.ui.util.delayTask
@@ -182,6 +184,16 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
     }
+
+    private val mStrokeBarPopupWindow: PopupWindow by lazy {
+        val barView = StrokeBarView(requireContext())
+        PopupWindow(requireContext()).apply {
+            contentView = barView
+            width = LayoutParams.WRAP_CONTENT
+            height = LayoutParams.WRAP_CONTENT
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        }
+    }
     override fun initBinding(): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(layoutInflater)
     }
@@ -298,6 +310,13 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
                     mBinding.drawView.refresh()
                     //刷新图层视图
                     refreshLayerRecyclerView()
+                }
+                OperationType.OPERATION_PENCIL-> {
+                    if (state == IconState.NORMAL){
+                        hideStrokeBarView()
+                    }else {
+                        showStokeBarView()
+                    }
                 }
                 else -> {}
             }
@@ -438,7 +457,19 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
     private fun hideColorPicker(){
         mColorPickerPopupWindow.dismiss()
     }
-
+    //隐藏画笔粗细视图
+    private fun hideStrokeBarView(){
+        mStrokeBarPopupWindow.dismiss()
+    }
+    //显示画笔粗细视图
+    private fun showStokeBarView(){
+        mStrokeBarPopupWindow.showAtLocation(
+            mBinding.root,
+            Gravity.END,
+            mBinding.root.width - mBinding.actionMenuView.left,
+            0
+        )
+    }
     //显示图层视图
     private fun showLayerView(){
         mLayerPopupWindow.showAsDropDown(

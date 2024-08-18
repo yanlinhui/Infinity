@@ -4,18 +4,30 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.graphics.RectF
 import android.graphics.Region
 import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import androidx.annotation.DrawableRes
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.baidu.infinity.ui.fragment.home.draw.LayerManager
 import com.baidu.infinity.ui.fragment.home.draw.ShapeType
 import com.baidu.infinity.ui.util.OperationType
 import com.baidu.infinity.ui.util.toast
 import com.baidu.infinity.viewmodel.HomeViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 
 class DrawView(
     context: Context,
@@ -48,6 +60,25 @@ class DrawView(
 
     }
 
+    //记录背景图片资源
+    @DrawableRes
+    private var mBackgroundResourceId: Int? = null
+        set(value) {
+            field = value
+            if (value != null){
+                //有背景资源 就解析成bitmap
+                mBackgroundBitmap = BitmapFactory.decodeResource(resources,value)
+                //刷新界面
+                invalidate()
+            }
+        }
+    private var mBackgroundBitmap: Bitmap? = null
+
+    //修改背景资源
+    fun changeBackgroundImage(@DrawableRes id: Int){
+        mBackgroundResourceId = id
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         //这个视图添加到窗口上时 注册广播
@@ -73,10 +104,13 @@ class DrawView(
         context.unregisterReceiver(mTextColorChangeReceiver)
     }
 
+    val mRect = RectF()
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         //创建默认的图层
         layerManager.addLayer(measuredWidth,measuredHeight)
+        mRect.right = measuredWidth.toFloat()
+        mRect.bottom = measuredHeight.toFloat()
     }
 
     //颜色改变时，如果当前时文本，需要刷新界面
@@ -91,7 +125,31 @@ class DrawView(
         invalidate()
     }
 
+    //获取视图中的图片
+    suspend fun getBitmap(): Flow<Bitmap> {
+        val bitmapFlow:Flow<Bitmap> = flow {
+                //创建一个和DrawView大小一致的空的画布
+                val bitmap = Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888)
+                //需要创建一个Canvas关联这个bitmap
+                val canvas = Canvas(bitmap)
+                //绘制背景图片
+                mBackgroundBitmap?.let { canvas.drawBitmap(mBackgroundBitmap!!,null, mRect,null)}
+                //绘制图层
+                layerManager.getLayersBitmap().forEach { layerBitmap ->
+                    canvas.drawBitmap(layerBitmap,0f,0f,null)
+                }
+                //bitmap创建完毕之后 就可以通过发射器发射出去
+                emit(bitmap)
+        }
+        return bitmapFlow
+    }
+
     override fun onDraw(canvas: Canvas) {
+        //绘制背景图片
+        if (mBackgroundResourceId != null){
+            canvas.drawBitmap(mBackgroundBitmap!!,null, mRect,null)
+        }
+
         //每个图层负责把自己图层的内容绘制到Bitmap中
         layerManager.draw()
 

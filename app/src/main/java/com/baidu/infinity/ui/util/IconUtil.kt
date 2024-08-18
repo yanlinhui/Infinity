@@ -42,7 +42,7 @@ fun getDrawToolIconModels(): List<IconModel> {
 fun getHomeMenuIconModels(): List<IconModel> {
     return listOf(
         IconModel(OperationType.MENU_WORKS, R.string.works),
-        IconModel(OperationType.MENU_MUSIC, R.string.music),
+        IconModel(OperationType.MENU_DOWNLOAD, R.string.save),
         IconModel(OperationType.MENU_SHARE, R.string.share),
         IconModel(OperationType.MENU_PICTURE, R.string.picture),
         IconModel(OperationType.MENU_ACCOUNT, R.string.account),

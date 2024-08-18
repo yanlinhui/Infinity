@@ -21,7 +21,7 @@ enum class OperationType {
     DRAW_BRUSH,
 
     MENU_WORKS,
-    MENU_MUSIC,
+    MENU_DOWNLOAD,
     MENU_SHARE,
     MENU_PICTURE,
     MENU_ACCOUNT,

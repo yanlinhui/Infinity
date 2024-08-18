@@ -2,11 +2,16 @@ package com.baidu.infinity.ui.fragment.home
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.ContentValues
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
+import android.util.TimeUtils
 import android.view.Gravity
 import android.view.View
 import android.view.WindowInsetsController
@@ -15,6 +20,7 @@ import android.widget.PopupWindow
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.baidu.infinity.R
@@ -31,9 +37,12 @@ import com.baidu.infinity.ui.fragment.home.layer.LayerModelManager
 import com.baidu.infinity.ui.fragment.home.layer.LayerState
 import com.baidu.infinity.ui.fragment.home.view.BroadCastCenter
 import com.baidu.infinity.ui.fragment.home.view.HSVColorPickerView
+import com.baidu.infinity.ui.fragment.home.view.LoadingView
+import com.baidu.infinity.ui.fragment.home.view.bg_image.PickBackgroundImagePopupWindow
 import com.baidu.infinity.ui.fragment.home.view.strokesize.StrokeBarView
 import com.baidu.infinity.ui.util.IconState
 import com.baidu.infinity.ui.util.OperationType
+import com.baidu.infinity.ui.util.TimeUtil
 import com.baidu.infinity.ui.util.delayTask
 import com.baidu.infinity.ui.util.dp2px
 import com.baidu.infinity.ui.util.dp2pxF
@@ -51,6 +60,8 @@ import com.drake.brv.utils.models
 import com.drake.brv.utils.setDifferModels
 import com.drake.brv.utils.setup
 import com.skydoves.colorpickerview.ColorPickerDialog
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class HomeFragment: BaseFragment<FragmentHomeBinding>() {
     private val closeBottom: Int by lazy {
@@ -194,6 +205,19 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
     }
+    //选择背景图片的弹窗
+    private val pickImagePopupWindow: PickBackgroundImagePopupWindow by lazy {
+        PickBackgroundImagePopupWindow(requireContext()).apply {
+            addImageSelectListener = { resId ->
+                mBinding.drawView.changeBackgroundImage(resId)
+            }
+        }
+    }
+    //加载动画
+    private val mLoadingView: LoadingView by lazy {
+        LoadingView(requireContext())
+    }
+
     override fun initBinding(): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(layoutInflater)
     }
@@ -335,6 +359,26 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
                         showLayerView()
                     }
                 }
+                OperationType.MENU_PICTURE ->{
+                    if (state == IconState.NORMAL){
+                        pickImagePopupWindow.hide()
+                    }else{
+                        pickImagePopupWindow.showAsDropDown(
+                            mBinding.mainMenuView,
+                            requireContext().dp2px(100)
+                        )
+                    }
+                }
+                OperationType.MENU_DOWNLOAD ->{ //下载到本地相册
+                    //隐藏弹窗的内容
+                    hideLayerView()
+                    pickImagePopupWindow.hide()
+
+                    saveDrawViewToAlbum()
+                    delayTask(200){
+                        mBinding.mainMenuView.resetIconState()
+                    }
+                }
                 else -> {}
             }
         }
@@ -363,6 +407,54 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
                 mBinding.edInput.text.clear()
             }
         }
+    }
+
+    private fun saveDrawViewToAlbum() {
+        //将DrawView上所有的背景Bitmap和图层Bitmap绘制到一个同意的Bitmap中
+        //insert into userTable age=30
+        //uri 需要定位哪个应用的那张表   Pictures/
+        //contentValues 插入的字段名和数据
+        //MediaStore: 媒体 Images Video Audio
+
+        //显示加载
+        mLoadingView.show(mBinding.root)
+
+        lifecycleScope.launch {
+            //生成图片
+            mBinding.drawView.getBitmap().collect{ bitmap ->
+                //下载本地
+                //定位图片在系统相册里面的位置
+                val imagesUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+                    MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+                }else{
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                }
+                //确定插入的数据和对应的字段
+                val contentValues = ContentValues().apply {
+                    //确定名字 注意唯一
+                    put(MediaStore.Images.Media.DISPLAY_NAME,TimeUtil.getTimeName())
+                    put(MediaStore.Images.Media.WIDTH,"${bitmap.width}")
+                    put(MediaStore.Images.Media.HEIGHT,"${bitmap.height}")
+                    put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+                }
+                //获取即将插入的图片在系统相册里面最准确的内容地址uri
+                val imgUri = requireContext().contentResolver.insert(imagesUri, contentValues)
+                imgUri?.let {
+                    //获取对应输出流，
+                    requireContext().contentResolver.openOutputStream(imgUri)?.use {
+                        //将bitmap通过这个输出流写入imgUri指定的位置
+                        bitmap.compress(Bitmap.CompressFormat.JPEG,100,it)
+
+                        //关闭加载动画
+                        delayTask(1000){
+                            mLoadingView.hide()
+                        }
+
+                    }
+                }
+            }
+        }
+
     }
 
     //弹出键盘

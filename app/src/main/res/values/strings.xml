@@ -25,6 +25,8 @@
     <string name="layer">&#xe768;</string>
     <string name="add">&#xe60e;</string>
     <string name="deleteCircle">&#xe652;</string>
+    <string name="save">&#xe703;</string>
+
 
     <string   name="undo" >&#xe624;</string>
     <string   name="garbage">&#xe6a6;</string>

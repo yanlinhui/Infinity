@@ -96,4 +96,7 @@ dependencies {
 
     //brv
     implementation(libs.brv)
+
+    //glide
+    implementation(libs.glide)
 }

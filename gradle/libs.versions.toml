@@ -19,6 +19,7 @@ lottie = "6.5.0"
 shape = "1.4.7"
 colorpicker = "2.3.0"
 brv = "1.6.0"
+glide = "4.16.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -63,6 +64,8 @@ colorpickerview = { group = "com.github.skydoves", name = "colorpickerview", ver
 #brv
 brv = { group = "com.github.liangjingkanji", name = "BRV", version.ref = "brv" }
 
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide"}
+#com.github.bumptech.glide:glide:4.16.0
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

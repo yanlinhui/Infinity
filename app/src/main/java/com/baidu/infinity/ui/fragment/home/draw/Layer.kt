@@ -119,12 +119,12 @@ class Layer(val id: Int,val width:Int, val height:Int) {
     }
     //修改正在绘制图形的状态
     fun updateShapeState(state: ShapeState){
-        currentShape().updateShapeState(state)
+        currentShape()?.updateShapeState(state)
     }
 
     //设置当前移动过程中的触摸点
     fun addEndPoint(endX: Float, endY: Float){
-        currentShape().setEndPoint(endX,endY)
+        currentShape()?.setEndPoint(endX,endY)
     }
 
     //提供给外部统一绘制
@@ -221,11 +221,15 @@ class Layer(val id: Int,val width:Int, val height:Int) {
 
 
     //获取当前正在操作的图形
-    private fun currentShape():BaseShape{
+    private fun currentShape():BaseShape?{
         //先判断是不是有当前选中的
         if (mLastSelectedShape != null) return mLastSelectedShape!!
 
-        return mShapes.last()
+        return if (mShapes.isNotEmpty()){
+            mShapes.last()
+        }else{
+            null
+        }
     }
 
 }

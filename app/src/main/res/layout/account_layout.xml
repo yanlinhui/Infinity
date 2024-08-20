@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="#171B26"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="262dp"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/headBgImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/head_icon" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="Pengxiaodong"
+            android:layout_marginEnd="10dp"
+            android:textColor="#FBFBFB"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/headBgImageView"
+            app:layout_constraintTop_toTopOf="@+id/headBgImageView" />
+
+        <TextView
+            android:id="@+id/tvAppellation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="新晋小生"
+            android:textColor="#878A92"
+            app:layout_constraintStart_toStartOf="@+id/tvName"
+            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+        <TextView
+            android:id="@+id/tvIconName"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="彭"
+            android:textColor="#FBFBFB"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/headBgImageView"
+            app:layout_constraintEnd_toEndOf="@+id/headBgImageView"
+            app:layout_constraintStart_toStartOf="@+id/headBgImageView"
+            app:layout_constraintTop_toTopOf="@+id/headBgImageView" />
+
+        <View
+            android:id="@+id/lineView"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="20dp"
+            android:background="#272C38"
+            app:layout_constraintTop_toBottomOf="@+id/headBgImageView" />
+
+        <View
+            android:id="@+id/bgIndicaterView"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/account_corner_round_shape"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lineView" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/workLayout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lineView">
+
+            <ImageView
+                android:id="@+id/workImageView"
+                android:layout_width="28dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="10dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/works" />
+
+            <TextView
+                android:id="@+id/workTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="3dp"
+                android:text="我的作品"
+                android:textColor="#878A93"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/workImageView"
+                app:layout_constraintStart_toEndOf="@+id/workImageView"
+                app:layout_constraintTop_toTopOf="@+id/workImageView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/settingLayout"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/workLayout"
+            app:layout_constraintStart_toStartOf="@+id/workLayout"
+            app:layout_constraintTop_toBottomOf="@+id/workLayout">
+            <ImageView
+                android:id="@+id/settingImageView"
+                android:layout_width="28dp"
+                android:layout_height="24dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/setting" />
+
+            <TextView
+                android:id="@+id/passwordTypeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="3dp"
+                android:text="设置密码类型"
+                android:textColor="#878A93"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/settingImageView"
+                app:layout_constraintStart_toEndOf="@+id/settingImageView"
+                app:layout_constraintTop_toTopOf="@+id/settingImageView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/logoutLayout"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/settingLayout"
+            app:layout_constraintStart_toStartOf="@+id/settingLayout"
+            app:layout_constraintTop_toBottomOf="@+id/settingLayout">
+
+            <ImageView
+                android:id="@+id/logoutImageView"
+                android:layout_width="28dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="2dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/log_out" />
+
+            <TextView
+                android:id="@+id/logoutTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="3dp"
+                android:text="退出登录"
+                android:textColor="#878A93"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/logoutImageView"
+                app:layout_constraintStart_toEndOf="@+id/logoutImageView"
+                app:layout_constraintTop_toTopOf="@+id/logoutImageView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/logoffLayout"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/logoutLayout"
+            app:layout_constraintStart_toStartOf="@+id/logoutLayout"
+            app:layout_constraintTop_toBottomOf="@+id/logoutLayout">
+
+            <ImageView
+                android:id="@+id/logoffImageView"
+                android:layout_width="28dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="2dp"
+                android:scaleType="centerInside"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/log_off" />
+
+            <TextView
+                android:id="@+id/logoffTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="3dp"
+                android:text="注销账号"
+                android:textColor="#878A93"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/logoffImageView"
+                app:layout_constraintStart_toEndOf="@+id/logoffImageView"
+                app:layout_constraintTop_toTopOf="@+id/logoffImageView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/coverImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/not_login"
+            tools:visibility="invisible" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

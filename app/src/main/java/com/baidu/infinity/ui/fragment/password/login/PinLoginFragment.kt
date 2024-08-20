@@ -1,4 +1,4 @@
-package com.baidu.infinity.ui.fragment.password
+package com.baidu.infinity.ui.fragment.password.login
 
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels

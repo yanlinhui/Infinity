@@ -21,6 +21,7 @@ import androidx.core.content.FileProvider
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +40,7 @@ import com.baidu.infinity.ui.fragment.home.layer.LayerState
 import com.baidu.infinity.ui.fragment.home.view.BroadCastCenter
 import com.baidu.infinity.ui.fragment.home.view.HSVColorPickerView
 import com.baidu.infinity.ui.fragment.home.view.LoadingView
+import com.baidu.infinity.ui.fragment.home.view.account.AccountPopupWindow
 import com.baidu.infinity.ui.fragment.home.view.bg_image.PickBackgroundImagePopupWindow
 import com.baidu.infinity.ui.fragment.home.view.strokesize.StrokeBarView
 import com.baidu.infinity.ui.util.IconState
@@ -53,6 +55,7 @@ import com.baidu.infinity.ui.util.getMenuIconModel
 import com.baidu.infinity.ui.util.getOperationToolIconModels
 import com.baidu.infinity.ui.util.toast
 import com.baidu.infinity.viewmodel.HomeViewModel
+import com.baidu.infinity.viewmodel.UserViewModel
 import com.drake.brv.BindingAdapter
 import com.drake.brv.listener.DefaultItemTouchCallback
 import com.drake.brv.utils.bindingAdapter
@@ -68,6 +71,9 @@ import java.io.File
 import java.io.FileOutputStream
 
 class HomeFragment: BaseFragment<FragmentHomeBinding>() {
+    //获取activity共享的userViewModel
+    private val mUserViewModel: UserViewModel by activityViewModels()
+
     private val closeBottom: Int by lazy {
         mBinding.drawLayout.top + mBinding.iconMenuView.top
     }
@@ -220,6 +226,10 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
     //加载动画
     private val mLoadingView: LoadingView by lazy {
         LoadingView(requireContext())
+    }
+    //用户中心
+    private val mAccountPopupWindow: AccountPopupWindow by lazy {
+        AccountPopupWindow(requireContext(), mUserViewModel)
     }
 
     override fun initBinding(): FragmentHomeBinding {
@@ -385,6 +395,16 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
                 }
                 OperationType.MENU_SHARE ->{
                     shareImage()
+                    delayTask(200){
+                        mBinding.mainMenuView.resetIconState()
+                    }
+                }
+                OperationType.MENU_ACCOUNT ->{
+                    if (state == IconState.SELECTED){
+                        mAccountPopupWindow.showAsDropDown(mBinding.mainMenuView)
+                    }else{
+                        mAccountPopupWindow.hide()
+                    }
                 }
                 else -> {}
             }

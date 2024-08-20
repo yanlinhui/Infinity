@@ -43,10 +43,17 @@
             app:exitAnim="@anim/left_out_anim"
             app:popEnterAnim="@anim/left_in_anim"
             app:popExitAnim="@anim/fade_out_anim" />
+        <action
+            android:id="@+id/action_homeFragment_to_picLoginFragment"
+            app:destination="@id/picLoginFragment"
+            app:enterAnim="@anim/right_in_anim"
+            app:exitAnim="@anim/fade_out_anim"
+            app:popEnterAnim="@anim/fade_in_anim"
+            app:popExitAnim="@anim/right_out_anim" />
     </fragment>
     <fragment
         android:id="@+id/picLoginFragment"
-        android:name="com.baidu.infinity.ui.fragment.password.PicLoginFragment"
+        android:name="com.baidu.infinity.ui.fragment.password.login.PicLoginFragment"
         android:label="fragment_pic_login"
         tools:layout="@layout/fragment_pic_login" >
         <action
@@ -56,10 +63,20 @@
             app:exitAnim="@anim/left_out_anim"
             app:popUpTo="@id/picLoginFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_picLoginFragment_to_pinRegisterFragment"
+            app:destination="@id/pinRegisterFragment"
+            app:enterAnim="@anim/right_in_anim"
+            app:exitAnim="@anim/left_out_anim"
+            app:popEnterAnim="@anim/left_in_anim"
+            app:popExitAnim="@anim/right_out_anim" />
+        <argument
+            android:name="hasHome"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/pinLoginFragment"
-        android:name="com.baidu.infinity.ui.fragment.password.PinLoginFragment"
+        android:name="com.baidu.infinity.ui.fragment.password.login.PinLoginFragment"
         android:label="fragment_pin_login"
         tools:layout="@layout/fragment_pin_login" >
         <action
@@ -82,5 +99,37 @@
             app:exitAnim="@anim/fade_out_anim"
             app:popUpTo="@id/myWorksFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/pinRegisterFragment"
+        android:name="com.baidu.infinity.ui.fragment.password.register.PinRegisterFragment"
+        android:label="fragment_pin_regist"
+        tools:layout="@layout/fragment_pin_regist" >
+        <action
+            android:id="@+id/action_pinRegisterFragment_to_picRegisterFragment2"
+            app:destination="@id/picRegisterFragment"
+            app:enterAnim="@anim/right_in_anim"
+            app:exitAnim="@anim/left_out_anim"
+            app:popEnterAnim="@anim/left_in_anim"
+            app:popExitAnim="@anim/right_out_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/picRegisterFragment"
+        android:name="com.baidu.infinity.ui.fragment.password.register.PicRegisterFragment"
+        android:label="fragment_pic_regist"
+        tools:layout="@layout/fragment_pic_regist" >
+        <action
+            android:id="@+id/action_picRegisterFragment_to_picLoginFragment2"
+            app:destination="@id/picLoginFragment"
+            app:enterAnim="@anim/left_in_anim"
+            app:exitAnim="@anim/right_out_anim"
+            app:popUpTo="@id/picLoginFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="password"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -74,15 +74,17 @@ class WelcomeFragment: BaseFragment<FragmentWelcomeLayoutBinding>() {
                 //过期 需要登录
                 //看默认的登陆类型
                 if (user.passwordType == 0){
+                    //图案登录
                     //val extras = FragmentNavigatorExtras(mBinding.animationView to "explode")
                     findNavController().navigate(
                         R.id.action_welcomeFragment_to_pinLoginFragment)
                 }else{
-                    findNavController().navigate(R.id.action_welcomeFragment_to_picLoginFragment)
+                    //密码登录
+                    val direction = WelcomeFragmentDirections.actionWelcomeFragmentToPicLoginFragment(false)
+                    findNavController().navigate(direction)
                 }
             }else{
                 //已登录 没过期 直接进入主页
-
                 findNavController().navigate(R.id.action_welcomeFragment_to_homeFragment)
             }
         }else{

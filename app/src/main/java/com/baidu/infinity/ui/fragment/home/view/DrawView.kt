@@ -101,7 +101,7 @@ class DrawView(
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         //视图从窗口中分离时，取消注册广播
-        context.unregisterReceiver(mTextColorChangeReceiver)
+        //context.unregisterReceiver(mTextColorChangeReceiver)
     }
 
     val mRect = RectF()

@@ -151,8 +151,11 @@ class Layer(val id: Int,val width:Int, val height:Int) {
     //跟新内容
     fun updateText(text: String){
         //拿到绘制文本的shape
-        val textShape = currentShape() as TextShape
-        textShape.updateText(text)
+        currentShape()?.let { shape ->
+            if (shape is TextShape) {
+                shape.updateText(text)
+            }
+        }
     }
 
     //填充颜色

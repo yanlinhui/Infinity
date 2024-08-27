@@ -3,18 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
 
-    <io.github.florent37.shapeofview.shapes.RoundRectView
-        android:layout_width="400dp"
-        android:layout_height="0dp"
-        android:background="#2A2E3B"
-        app:shape_roundRect_bottomRightRadius="10dp"
-        app:shape_roundRect_bottomLeftRadius="10dp"
-        app:shape_roundRect_topLeftRadius="10dp"
-        app:shape_roundRect_topRightRadius="10dp"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="224dp"
+        android:layout_height="140dp"
+        app:cardBackgroundColor="#434755"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="h,8:5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -41,7 +39,7 @@
             android:layout_marginStart="9dp"
             android:layout_marginTop="9dp"
             app:srcCompat="@drawable/choose" />
-    </io.github.florent37.shapeofview.shapes.RoundRectView>
+    </com.google.android.material.card.MaterialCardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

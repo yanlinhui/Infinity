@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.baidu.infinity.R
 import com.baidu.infinity.databinding.FragmentPicLoginBinding
 import com.baidu.infinity.ui.base.BaseFragment
+import com.baidu.infinity.ui.fragment.home.file.FileManager
 import com.baidu.infinity.ui.util.KeyboardAnimation
 import com.baidu.infinity.ui.util.LoginRegisterResult
 import com.baidu.infinity.ui.util.PasswordType
@@ -51,6 +52,8 @@ class PicLoginFragment: BaseFragment<FragmentPicLoginBinding>() {
                 is LoginRegisterResult.Success -> {
                     //成功登录 进入下一个界面
                     mBinding.alertView.showMessage("登录成功")
+                    //配置文件系统
+                    FileManager.instance.login(mBinding.usernameView.text().trim())
                     //200ms之后再跳转
                     delayTask(200){
                         //跳转分两种

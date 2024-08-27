@@ -43,7 +43,6 @@ class UserViewModel(
                 if (it.isNotEmpty()){
                     withContext(Dispatchers.Main){
                         _currentUser = it[0]
-                        //_isFindFinihsed.value = true
                     }
                 }
                 _isFindFinihsed.postValue(true)
@@ -64,6 +63,16 @@ class UserViewModel(
         viewModelScope.launch(Dispatchers.IO){
             repository.insertUser(User(0,name,pinPassword, picPassword))
             _loginRegisterResult.postValue( LoginRegisterResult.Success())
+        }
+    }
+
+    //退出登录
+    fun logout(){
+        if (_currentUser != null){
+            //修改这个用户的登录状态
+            _currentUser!!.isLogin = false
+            //更新数据库信息
+            updateUser(_currentUser!!)
         }
     }
 
@@ -124,11 +133,13 @@ class UserViewModel(
                 user.loginDate = Date() //记录登录时间
                 updateUser(user)
                 _loginRegisterResult.postValue(LoginRegisterResult.Success())
-                _loginRegisterResult.value = (LoginRegisterResult.Success())
-
                 _currentUser = user
             }else{
-                _loginRegisterResult.postValue(LoginRegisterResult.Failure(WrongType.USER_LOGINED))
+                //已经登录了，需要更新登录时间
+                user.loginDate = Date() //记录登录时间
+                updateUser(user)
+                _loginRegisterResult.postValue(LoginRegisterResult.Success())
+                _currentUser = user
             }
         }
     }

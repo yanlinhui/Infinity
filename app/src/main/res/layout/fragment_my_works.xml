@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#171B26"
-    tools:context=".ui.fragment.account.MyWorksFragment">
+    android:background="#2A2E3B"
+    tools:context=".ui.fragment.account.album.MyWorksFragment">
 
     <View
         android:id="@+id/lineView"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#272C38"
+        android:background="#323845"
         android:layout_marginTop="60dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,20 +19,21 @@
 
     <ImageView
         android:id="@+id/backImageView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/back"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginStart="20dp"
+        android:src="@drawable/back"
         app:layout_constraintBottom_toTopOf="@+id/lineView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/deleteImageView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/delete"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginEnd="20dp"
+        android:src="@drawable/delete"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/backImageView"
         app:layout_constraintEnd_toStartOf="@+id/tvEdit"
         app:layout_constraintTop_toTopOf="@+id/backImageView" />
@@ -43,7 +44,7 @@
         android:layout_height="wrap_content"
         android:text="Edit"
         android:textColor="#B4B4B5"
-        android:textSize="25sp"
+        android:textSize="22sp"
         android:layout_marginEnd="40dp"
         app:layout_constraintBottom_toBottomOf="@+id/deleteImageView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,6 +54,10 @@
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

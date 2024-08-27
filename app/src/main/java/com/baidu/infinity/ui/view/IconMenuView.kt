@@ -96,6 +96,8 @@ class IconMenuView(
         mCurrentSelectedView!!.updateIconState(IconState.NORMAL)
         mCurrentSelectedView = null
     }
+
+
 }
 
 

@@ -40,9 +40,9 @@
             android:id="@+id/action_homeFragment_to_myWorksFragment"
             app:destination="@id/myWorksFragment"
             app:enterAnim="@anim/fade_in_anim"
-            app:exitAnim="@anim/left_out_anim"
-            app:popEnterAnim="@anim/left_in_anim"
-            app:popExitAnim="@anim/fade_out_anim" />
+            app:exitAnim="@anim/fade_out_anim"
+            app:popEnterAnim="@anim/fade_in_anim"
+            app:popExitAnim="@anim/right_out_anim" />
         <action
             android:id="@+id/action_homeFragment_to_picLoginFragment"
             app:destination="@id/picLoginFragment"
@@ -89,16 +89,16 @@
     </fragment>
     <fragment
         android:id="@+id/myWorksFragment"
-        android:name="com.baidu.infinity.ui.fragment.account.MyWorksFragment"
+        android:name="com.baidu.infinity.ui.fragment.account.album.MyWorksFragment"
         android:label="fragment_my_works"
         tools:layout="@layout/fragment_my_works" >
         <action
-            android:id="@+id/action_myWorksFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:enterAnim="@anim/left_in_anim"
+            android:id="@+id/action_myWorksFragment_to_photoBrowserFragment"
+            app:destination="@id/photoBrowserFragment"
+            app:enterAnim="@anim/right_in_anim"
             app:exitAnim="@anim/fade_out_anim"
-            app:popUpTo="@id/myWorksFragment"
-            app:popUpToInclusive="true" />
+            app:popEnterAnim="@anim/fade_in_anim"
+            app:popExitAnim="@anim/right_out_anim" />
     </fragment>
     <fragment
         android:id="@+id/pinRegisterFragment"
@@ -132,4 +132,9 @@
             android:name="password"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/photoBrowserFragment"
+        android:name="com.baidu.infinity.ui.fragment.account.photobrowser.PhotoBrowserFragment"
+        android:label="fragment_photo_broswer"
+        tools:layout="@layout/fragment_photo_broswer" />
 </navigation>

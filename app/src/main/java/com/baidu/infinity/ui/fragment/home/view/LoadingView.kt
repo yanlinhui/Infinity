@@ -45,7 +45,7 @@ class LoadingView(val context: Context) {
     }
 
     //hide
-    fun hide(){
+    fun hide(onAnimatorEnd:()->Unit = {}){
         mBinding!!.loadingView.visibility = View.INVISIBLE
         mBinding!!.okView.visibility = View.VISIBLE
         mBinding!!.okView.addAnimatorListener(object : Animator.AnimatorListener{
@@ -53,6 +53,7 @@ class LoadingView(val context: Context) {
             }
             override fun onAnimationEnd(animation: Animator) {
                 popupWindow.dismiss()
+                onAnimatorEnd()
                 mBinding!!.loadingView.visibility = View.VISIBLE
                 mBinding!!.okView.visibility = View.INVISIBLE
             }

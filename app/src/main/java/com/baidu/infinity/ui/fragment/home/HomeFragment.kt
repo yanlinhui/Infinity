@@ -34,6 +34,7 @@ import com.baidu.infinity.databinding.StrokeBarVewLayoutBinding
 import com.baidu.infinity.model.IconModel
 import com.baidu.infinity.ui.base.BaseFragment
 import com.baidu.infinity.ui.fragment.home.draw.LayerManager
+import com.baidu.infinity.ui.fragment.home.file.FileManager
 import com.baidu.infinity.ui.fragment.home.layer.LayerModel
 import com.baidu.infinity.ui.fragment.home.layer.LayerModelManager
 import com.baidu.infinity.ui.fragment.home.layer.LayerState
@@ -66,6 +67,7 @@ import com.drake.brv.utils.setup
 import com.skydoves.colorpickerview.ColorPickerDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -366,6 +368,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
 
             when (type) {
                 OperationType.MENU_LAYER ->{
+                    mAccountPopupWindow.hide()
+                    pickImagePopupWindow.hide()
                     //图层
                     if (state == IconState.NORMAL){
                         hideLayerView()
@@ -374,6 +378,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
                     }
                 }
                 OperationType.MENU_PICTURE ->{
+                    hideLayerView()
+                    mAccountPopupWindow.hide()
                     if (state == IconState.NORMAL){
                         pickImagePopupWindow.hide()
                     }else{
@@ -385,18 +391,21 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
                 }
                 OperationType.MENU_DOWNLOAD ->{ //下载到本地相册
                     //隐藏弹窗的内容
-                    hideLayerView()
-                    pickImagePopupWindow.hide()
-
                     saveDrawViewToAlbum()
                     delayTask(200){
                         mBinding.mainMenuView.resetIconState()
+                        hideLayerView()
+                        mAccountPopupWindow.hide()
+                        pickImagePopupWindow.hide()
                     }
                 }
                 OperationType.MENU_SHARE ->{
                     shareImage()
                     delayTask(200){
                         mBinding.mainMenuView.resetIconState()
+                        hideLayerView()
+                        mAccountPopupWindow.hide()
+                        pickImagePopupWindow.hide()
                     }
                 }
                 OperationType.MENU_ACCOUNT ->{
@@ -404,6 +413,39 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
                         mAccountPopupWindow.showAsDropDown(mBinding.mainMenuView)
                     }else{
                         mAccountPopupWindow.hide()
+                    }
+                    hideLayerView()
+                    pickImagePopupWindow.hide()
+                }
+                OperationType.MENU_SAVE ->{
+                    delayTask(200){
+                        mBinding.mainMenuView.resetIconState()
+                        hideLayerView()
+                        mAccountPopupWindow.hide()
+                        pickImagePopupWindow.hide()
+                    }
+                    //保存到本地
+                    //加载动画
+                    mLoadingView.show(mBinding.root)
+                    //保存文件
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        mBinding.drawView.getBitmap().collect{ bitmap ->
+                            val name = TimeUtil.getTimeName()
+                            //保存原图
+                            FileManager.instance.saveBitmap(bitmap,name,true)
+                            //保存缩略图
+                            val thumbBitmap = Bitmap.createScaledBitmap(
+                                bitmap,
+                                (bitmap.width * 0.2).toInt(),
+                                (bitmap.height * 0.2).toInt(),
+                                true
+                            )
+                            FileManager.instance.saveBitmap(thumbBitmap,name,false)
+                            //更新UI
+                            withContext(Dispatchers.Main){
+                                mLoadingView.hide()
+                            }
+                        }
                     }
                 }
                 else -> {}

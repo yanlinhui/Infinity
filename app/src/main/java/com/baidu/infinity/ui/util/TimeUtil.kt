@@ -11,6 +11,6 @@ object TimeUtil {
         //定义格式转化的对象 202408181629
         val formatter = SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA)
         //将Date按照formatter格式提取
-        return formatter.format(Date())
+        return formatter.format(Date())+".jpg"
     }
 }

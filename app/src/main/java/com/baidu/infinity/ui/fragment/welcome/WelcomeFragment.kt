@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.baidu.infinity.R
 import com.baidu.infinity.databinding.FragmentWelcomeLayoutBinding
 import com.baidu.infinity.ui.base.BaseFragment
+import com.baidu.infinity.ui.fragment.home.file.FileManager
 import com.baidu.infinity.ui.util.PasswordType
 import com.baidu.infinity.ui.util.toast
 import com.baidu.infinity.viewmodel.UserViewModel
@@ -85,6 +86,7 @@ class WelcomeFragment: BaseFragment<FragmentWelcomeLayoutBinding>() {
                 }
             }else{
                 //已登录 没过期 直接进入主页
+                FileManager.instance.login(user.name)
                 findNavController().navigate(R.id.action_welcomeFragment_to_homeFragment)
             }
         }else{

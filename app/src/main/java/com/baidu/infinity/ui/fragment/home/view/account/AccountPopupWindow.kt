@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager.LayoutParams
 import android.widget.PopupWindow
-import android.widget.Toast
 import androidx.navigation.findNavController
 import com.baidu.infinity.R
 import com.baidu.infinity.databinding.AccountLayoutBinding
@@ -58,7 +57,12 @@ class AccountPopupWindow(val context: Context, val userViewModel: UserViewModel)
             mView?.findNavController()?.navigate(R.id.action_homeFragment_to_myWorksFragment)
         }
         mBinding!!.settingLayout.setOnClickListener {
+            //设置密码类型
             mBinding!!.bgIndicaterView.y = mBinding!!.settingLayout.y
+            //隐藏自己
+            hide()
+            //弹出选择密码类型的窗口
+            mView!!.findNavController().navigate(R.id.action_homeFragment_to_setPasswordTypeFragment)
         }
         mBinding!!.logoutLayout.setOnClickListener {
             mBinding!!.bgIndicaterView.y = mBinding!!.logoutLayout.y

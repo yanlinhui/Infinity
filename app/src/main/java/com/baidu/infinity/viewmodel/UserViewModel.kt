@@ -53,6 +53,7 @@ class UserViewModel(
     fun resetLoginState(){
         _loginRegisterResult.value = LoginRegisterResult.None()
     }
+
     //注册
     fun register(name:String, pinPassword:String, picPassword:String){
         if (name.isEmpty() || pinPassword.isEmpty() || picPassword.isEmpty()){

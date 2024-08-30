@@ -50,6 +50,13 @@
             app:exitAnim="@anim/fade_out_anim"
             app:popEnterAnim="@anim/fade_in_anim"
             app:popExitAnim="@anim/right_out_anim" />
+        <action
+            android:id="@+id/action_homeFragment_to_setPasswordTypeFragment"
+            app:destination="@id/setPasswordTypeFragment"
+            app:enterAnim="@anim/right_in_anim"
+            app:exitAnim="@anim/fade_out_anim"
+            app:popEnterAnim="@anim/fade_in_anim"
+            app:popExitAnim="@anim/right_out_anim" />
     </fragment>
     <fragment
         android:id="@+id/picLoginFragment"
@@ -137,4 +144,9 @@
         android:name="com.baidu.infinity.ui.fragment.account.photobrowser.PhotoBrowserFragment"
         android:label="fragment_photo_broswer"
         tools:layout="@layout/fragment_photo_broswer" />
+    <fragment
+        android:id="@+id/setPasswordTypeFragment"
+        android:name="com.baidu.infinity.ui.fragment.home.view.account.SetPasswordTypeFragment"
+        android:label="choose_password_type_layout"
+        tools:layout="@layout/choose_password_type_layout" />
 </navigation>
